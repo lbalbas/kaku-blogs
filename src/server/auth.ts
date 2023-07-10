@@ -35,6 +35,7 @@ declare module "next-auth" {
  *
  * @see https://next-auth.js.org/configuration/options
  */
+ 
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session: ({ session, user }) => ({
@@ -48,8 +49,8 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
      GithubProvider({
-       clientId: process.env.GITHUB_CLIENT_ID,
-       clientSecret: process.env.GITHUB_CLIENT_SECRET,
+       clientId: process.env.GITHUB_CLIENT_ID!,
+       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
        authorization: "https://github.com/login/oauth/authorize?scope=user",
      }),
     /**
