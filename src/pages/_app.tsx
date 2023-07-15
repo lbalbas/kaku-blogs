@@ -4,6 +4,7 @@ import { type AppType } from "next/app";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import Layout from '../components/layout';
+import 'react-quill/dist/quill.snow.css'
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
