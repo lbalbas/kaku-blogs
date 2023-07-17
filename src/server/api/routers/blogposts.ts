@@ -4,6 +4,7 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "~/server/api/trpc";
+import { prisma } from "~/server/db";
 
 export const blogPostsRouter = createTRPCRouter({
   hello: publicProcedure
@@ -14,15 +15,26 @@ export const blogPostsRouter = createTRPCRouter({
       };
     }),
 
-  getAll: publicProcedure.query(({ ctx }) => {
-    console.log("hey");
-    return { msg: "greetings" };
-  }),
+  getOne: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      const result = await prisma.blogPost.findFirst({
+        where: { id: input.id },
+      });
+
+      return result;
+    }),
 
   publish: protectedProcedure
     .input(z.object({ title: z.string(), content: z.string() }))
-    .mutation(({ ctx, input }) => {
-      console.log(ctx.session);
-      return { post: input.content };
+    .mutation(async ({ ctx, input }) => {
+      await prisma.blogPost.create({
+        data: {
+          title: input.title,
+          content: input.content,
+          userId: ctx.session.user.id,
+        },
+      });
+      return { status: 200, msg: "Success" };
     }),
 });
