@@ -19,9 +19,10 @@ export const blogPostsRouter = createTRPCRouter({
     return { msg: "greetings" };
   }),
 
-  publish: publicProcedure
+  publish: protectedProcedure
     .input(z.object({ title: z.string(), content: z.string() }))
     .mutation(({ ctx, input }) => {
+      console.log(ctx.session);
       return { post: input.content };
     }),
 });

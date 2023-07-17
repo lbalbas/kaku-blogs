@@ -15,6 +15,6 @@ export default function LoginButton() {
       </div>
     );
   } else {
-    return <div>Can't fetch the session</div>;
+    return <div>{"Can't fetch the session"}</div>;
   }
 }
