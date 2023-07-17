@@ -4,9 +4,7 @@ export default function Layout({ children }: ReactNode) {
   return (
     <>
       <div>Nav</div>
-      <main className="">
-        {children}
-      </main>
+      <main className="my-8">{children}</main>
       <div>Footer</div>
     </>
   );
