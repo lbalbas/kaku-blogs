@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { useState, useRef, useCallback } from "react";
 import { api } from "~/utils/api";
+import type { Quill } from "quill";
 
 type QuillProps = {
   forwardedRef: React.Ref<any>;
@@ -20,12 +21,23 @@ const QuillNoSSRWrapper = dynamic(
 );
 
 type QuillInstance = {
-  getEditor: () => any;
-  theme: {
-    tooltip: any;
-  };
+  getEditor: () => QuillWTheme;
 };
 
+type Tooltip = {
+  save: () => void;
+  hide: () => void;
+  edit: (mode: string) => void;
+  quill: Quill;
+  textbox: HTMLInputElement;
+};
+
+interface QuillWTheme extends Quill {
+  theme?: {
+    tooltip: Tooltip;
+    [key: string]: any;
+  };
+}
 export default function Editor() {
   const [value, setValue] = useState("");
   const [title, setTitle] = useState("");
@@ -43,27 +55,29 @@ export default function Editor() {
 
   const imageHandler = useCallback(() => {
     if (quillRef.current) {
-      const quill = quillRef.current.getEditor();
-      const tooltip = quill.theme.tooltip;
-      const originalSave = tooltip.save;
-      const originalHide = tooltip.hide;
+      const quill: QuillWTheme = quillRef.current.getEditor();
+      const tooltip: Tooltip | undefined = quill.theme?.tooltip;
+      if (tooltip) {
+        const originalSave = tooltip.save;
+        const originalHide = tooltip.hide;
 
-      tooltip.save = function () {
-        const range = this.quill.getSelection(true);
-        const value = this.textbox.value;
-        if (value) {
-          this.quill.insertEmbed(range.index, "image", value, "user");
-        }
-      };
+        tooltip.save = function () {
+          const range = this.quill.getSelection(true);
+          const value = this.textbox.value;
+          if (value) {
+            this.quill.insertEmbed(range.index, "image", value, "user");
+          }
+        };
 
-      tooltip.hide = function () {
-        tooltip.save = originalSave;
-        tooltip.hide = originalHide;
-        tooltip.hide();
-      };
+        tooltip.hide = function () {
+          tooltip.save = originalSave;
+          tooltip.hide = originalHide;
+          tooltip.hide();
+        };
 
-      tooltip.edit("image");
-      tooltip.textbox.placeholder = "Embed URL";
+        tooltip.edit("image");
+        tooltip.textbox.placeholder = "Embed URL";
+      }
     }
   }, []);
 
