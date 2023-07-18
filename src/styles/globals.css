@@ -2,4 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.ql-snow .ql-tooltip::before {   content: "Image URL:"!important } 
+.ql-snow .ql-tooltip::before {
+  content: "Image URL:" !important;
+}

@@ -4,46 +4,45 @@ import { api } from "~/utils/api";
 import { useRouter } from "next/router";
 import LoadingBlock from "~/components/loading";
 import parse from "html-react-parser";
+import { generateSSGHelper } from "~/server/helpers/ssgHelper";
+import type { GetStaticProps, NextPage } from "next";
 
-const BlogPost = () => {
-  const router = useRouter();
-  const { id } = router.query;
-  let stringId = "";
+const BlogPost: NextPage<{ id: string }> = ({ id }) => {
+  const {data} = api.blogs.getOne.useQuery({ id });
+  if (!data) return <div>404</div>
 
-  if (Array.isArray(id)) {
-    if (id[0]) stringId = id[0];
-  } else if (id) {
-    // If id is a string
-    stringId = id;
-  }
-
-  const post = api.blogs.getOne.useQuery(
-    { id: stringId },
-    {
-      enabled: stringId !== "", // Enable the query only when id is defined and is a string
-    }
-  );
-
-  if (post.isLoading) {
-    return (
-      <div>
-        <Head>
-          <title>Kaku Blogs</title>
-        </Head>
-        <LoadingBlock size={32} />
-      </div>
-    );
-  } else if (post.data) {
-    const { title, content } = post.data;
+    const { title, content } = data;
     return (
       <div className="flex flex-col items-center">
         <Head>
           <title>{title}</title>
         </Head>
-        <h1 className="text-2xl font-bold">{title}</h1>
+        <h1 className="text-2xl ">{title}</h1>
         <div>{parse(content)}</div>
       </div>
     );
   }
+;
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const ssg = generateSSGHelper();
+
+  const id = context.params?.id;
+
+  if (typeof id !== "string") throw new Error("no id");
+
+  await ssg.blogs.getOne.prefetch({id});
+  
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+      id,
+    },
+  };
 };
+
+export const getStaticPaths = () => {
+  return { paths: [], fallback: "blocking" };
+};
+
 export default BlogPost;
