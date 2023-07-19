@@ -1,14 +1,11 @@
-import Head from "next/head";
-import Link from "next/link";
-import Editor from "../components/editor";
-import LoginButton from "../components/login-btn";
+import Feed from '~/components/feed'
 
 export default function Home() {
   return (
     <>
-      <main className="flex">
-        <LoginButton />
-        <Editor />
+      <main className="flex-col">
+        <h1 className="text-3xl">Start sharing your ideas today!</h1>
+        <Feed />
       </main>
     </>
   );

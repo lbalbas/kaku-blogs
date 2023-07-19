@@ -6,15 +6,7 @@ import {
 } from "~/server/api/trpc";
 
 export const blogPostsRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
-  getOne: publicProcedure
+  getOneById: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input, ctx }) => {
       const result = await ctx.prisma.blogPost.findFirst({
@@ -23,7 +15,14 @@ export const blogPostsRouter = createTRPCRouter({
 
       return result;
     }),
-
+  getMostRecent: publicProcedure.query(async ({ctx})=>{
+    return ctx.prisma.blogPost.findMany({
+      take: 10,
+      orderBy: {
+        publishedAt: 'desc',
+      }
+    })
+  }),
   publish: protectedProcedure
     .input(z.object({ title: z.string(), content: z.string() }))
     .mutation(async ({ ctx, input }) => {

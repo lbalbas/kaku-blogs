@@ -58,6 +58,7 @@ model User {
 
 model BlogPost {
   id       String       @id @default(cuid())
+  publishedAt DateTime @default(now())
   title    String
   content  String       @db.VarChar(3000)
   userId   String

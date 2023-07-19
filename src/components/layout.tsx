@@ -1,11 +1,18 @@
 import type { ReactNode } from "react";
+import Link from 'next/link';
+import LoginButton from '~/components/login-btn';
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-      <div>Nav</div>
-      <main className="my-8">{children}</main>
-      <div>Footer</div>
+      <nav>
+        <div className="w-11/12 mx-auto py-4 flex justify-between">
+          <Link href="/">Logo</Link>
+          <LoginButton />         
+        </div>
+      </nav>
+      <main className="w-11/12 flex-col mx-auto my-8">{children}</main>
+      <div className="w-11/12 mx-auto py-4">Footer</div>
     </>
   );
 }
