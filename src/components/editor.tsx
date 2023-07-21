@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import { useState, useRef, useCallback } from "react";
-import { api } from "~/utils/api";
 import type { Quill } from "quill";
 
 type QuillProps = {
@@ -38,20 +37,15 @@ interface QuillWTheme extends Quill {
     [key: string]: any;
   };
 }
-export default function Editor() {
-  const [value, setValue] = useState("");
-  const [title, setTitle] = useState("");
+
+interface EditorProps {
+  value: string,
+  setValue: (arg0:string)=>void,
+}
+
+export default function Editor(props: EditorProps) {
+  const {value, setValue} = props;
   const quillRef = useRef<QuillInstance | null>(null);
-  const { mutate, isLoading: isPosting } = api.blogs.publish.useMutation({
-    onError: (e) => {
-      const errorMessage = e.data?.zodError?.fieldErrors.content;
-      if (errorMessage && errorMessage[0]) {
-        console.log(errorMessage[0]);
-      } else {
-        console.log("Failed to post! Please try again later.");
-      }
-    },
-  });
 
   const imageHandler = useCallback(() => {
     if (quillRef.current) {
@@ -124,8 +118,6 @@ export default function Editor() {
   ];
 
   return (
-    <div>
-      <input onChange={(e) => setTitle(e.target.value)} type="Text" />
       <QuillNoSSRWrapper
         forwardedRef={quillRef}
         placeholder="Start writing your Blog Post here"
@@ -135,13 +127,5 @@ export default function Editor() {
         formats={formats}
         theme="snow"
       />
-      <button
-        onClick={() => {
-          mutate({ title: title, content: value });
-        }}
-      >
-        Post
-      </button>
-    </div>
   );
 }
