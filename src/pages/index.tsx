@@ -3,10 +3,10 @@ import Feed from '~/components/feed'
 export default function Home() {
   return (
     <>
-      <main className="flex-col">
-        <h1 className="text-3xl">Start sharing your ideas today!</h1>
+      <div className="flex flex-col justify-between items-center w-full gap-10">
+        <h1 className="text-3xl tracking-wide">Start sharing your thoughts today!</h1>
         <Feed />
-      </main>
+      </div>
     </>
   );
 }

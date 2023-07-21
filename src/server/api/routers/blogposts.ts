@@ -20,6 +20,9 @@ export const blogPostsRouter = createTRPCRouter({
       take: 10,
       orderBy: {
         publishedAt: 'desc',
+      },
+      include: {
+        user: true,
       }
     })
   }),
