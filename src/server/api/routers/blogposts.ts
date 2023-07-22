@@ -15,27 +15,31 @@ export const blogPostsRouter = createTRPCRouter({
 
       return result;
     }),
-  getMostRecent: publicProcedure.query(async ({ctx})=>{
+  getMostRecent: publicProcedure.query(async ({ ctx }) => {
     return ctx.prisma.blogPost.findMany({
       take: 10,
       orderBy: {
-        publishedAt: 'desc',
+        publishedAt: "desc",
       },
       include: {
         user: true,
-      }
-    })
+      },
+    });
   }),
   publish: protectedProcedure
-    .input(z.object({ title: z.string(), content: z.string() }))
+    .input(
+      z.object({ draftId: z.string(), title: z.string(), content: z.string() })
+    )
     .mutation(async ({ ctx, input }) => {
-      await ctx.prisma.blogPost.create({
-        data: {
-          title: input.title,
-          content: input.content,
-          userId: ctx.session.user.id,
-        },
-      });
-      return { status: 200, msg: "Success" };
+      return await ctx.prisma.$transaction([
+        ctx.prisma.blogPost.create({
+          data: {
+            title: input.title,
+            content: input.content,
+            userId: ctx.session.user.id,
+          },
+        }),
+        ctx.prisma.draft.delete({ where: { id: input.draftId } }),
+      ]);
     }),
 });
