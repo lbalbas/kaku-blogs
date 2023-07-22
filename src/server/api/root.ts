@@ -1,5 +1,5 @@
 import { blogPostsRouter } from "~/server/api/routers/blogposts";
-import {draftsRouter} from "~/server/api/routers/drafts";
+import { draftsRouter } from "~/server/api/routers/drafts";
 import { createTRPCRouter } from "~/server/api/trpc";
 
 /**

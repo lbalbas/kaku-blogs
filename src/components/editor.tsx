@@ -39,12 +39,12 @@ interface QuillWTheme extends Quill {
 }
 
 interface EditorProps {
-  value: string,
-  setValue: (arg0:string)=>void,
+  value: string;
+  setValue: (arg0: string) => void;
 }
 
 export default function Editor(props: EditorProps) {
-  const {value, setValue} = props;
+  const { value, setValue } = props;
   const quillRef = useRef<QuillInstance | null>(null);
 
   const imageHandler = useCallback(() => {
@@ -118,14 +118,14 @@ export default function Editor(props: EditorProps) {
   ];
 
   return (
-      <QuillNoSSRWrapper
-        forwardedRef={quillRef}
-        placeholder="Start writing your Blog Post here"
-        modules={modules}
-        value={value}
-        onChange={setValue}
-        formats={formats}
-        theme="snow"
-      />
+    <QuillNoSSRWrapper
+      forwardedRef={quillRef}
+      placeholder="Start writing your Blog Post here"
+      modules={modules}
+      value={value}
+      onChange={setValue}
+      formats={formats}
+      theme="snow"
+    />
   );
 }
