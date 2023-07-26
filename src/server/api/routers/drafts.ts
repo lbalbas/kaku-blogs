@@ -25,14 +25,13 @@ export const draftsRouter = createTRPCRouter({
     return result;
   }),
   create: protectedProcedure.mutation(async ({ ctx }) => {
-    await ctx.prisma.draft.create({
+    return await ctx.prisma.draft.create({
       data: {
         title: "New Post",
         content: "",
         userId: ctx.session.user.id,
       },
     });
-    return { status: 200, msg: "Success" };
   }),
   save: protectedProcedure
     .input(z.object({ id: z.string(), title: z.string(), content: z.string() }))

@@ -26,6 +26,31 @@ export const blogPostsRouter = createTRPCRouter({
       },
     });
   }),
+  getAllByUserId: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const user = await ctx.prisma.user.findFirst({
+        where: {
+          id: input.id,
+        },
+      });
+
+      if (!user) throw new Error("User doesn't exist");
+
+      const posts = await ctx.prisma.blogPost.findMany({
+        where: {
+          userId: input.id,
+        },
+        orderBy: {
+          publishedAt: "desc",
+        },
+      });
+      const userWithPosts = {
+        posts,
+        user,
+      };
+      return userWithPosts;
+    }),
   publish: protectedProcedure
     .input(
       z.object({ draftId: z.string(), title: z.string(), content: z.string() })

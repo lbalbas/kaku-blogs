@@ -6,6 +6,7 @@ import "~/styles/globals.css";
 import Layout from "../components/layout";
 import "react-quill/dist/quill.snow.css";
 import Head from "next/head";
+import { Toaster } from "react-hot-toast";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -13,6 +14,30 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
+      <Toaster
+        position={"top-center"}
+        toastOptions={{
+          duration: 4000,
+
+          // Styling
+          style: {},
+          className: "",
+
+          // Custom Icon
+
+          // Change colors of success/error/loading icon
+          iconTheme: {
+            primary: "#000",
+            secondary: "#fff",
+          },
+
+          // Aria
+          ariaProps: {
+            role: "status",
+            "aria-live": "polite",
+          },
+        }}
+      />
       <Layout>
         <Head>
           <title>Kaku Blogs</title>
