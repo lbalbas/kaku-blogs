@@ -11,6 +11,9 @@ export const blogPostsRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const result = await ctx.prisma.blogPost.findFirst({
         where: { id: input.id },
+        include: {
+          user: true,
+        }
       });
 
       return result;
