@@ -78,15 +78,8 @@ export default function Editor(props: EditorProps) {
   const modules = {
     toolbar: {
       container: [
-        [{ header: "1" }, { header: "2" }, { font: [] }],
-        [{ size: [] }],
         ["bold", "italic", "underline", "strike", "blockquote"],
-        [
-          { list: "ordered" },
-          { list: "bullet" },
-          { indent: "-1" },
-          { indent: "+1" },
-        ],
+        [{ list: "ordered" }, { list: "bullet" }],
         ["link", "image", "video"],
         ["clean"],
       ],
@@ -101,9 +94,6 @@ export default function Editor(props: EditorProps) {
   };
 
   const formats = [
-    "header",
-    "font",
-    "size",
     "bold",
     "italic",
     "underline",
@@ -111,7 +101,6 @@ export default function Editor(props: EditorProps) {
     "blockquote",
     "list",
     "bullet",
-    "indent",
     "link",
     "image",
     "video",

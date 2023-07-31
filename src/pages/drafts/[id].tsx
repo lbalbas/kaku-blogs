@@ -51,26 +51,40 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          saveDraft({ id, title: title, content: value });
-        }}
-      >
-        Save
-      </button>
-      <button
-        onClick={() => {
-          publishDraft({ draftId: id, title: title, content: value });
-        }}
-      >
-        Publish
-      </button>
-      <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        type="Text"
-      />
+      <div className="flex items-center justify-between">
+        <div className="flex flex-grow flex-col">
+          <span className="font-bold">Title</span>
+          <input
+            className="rounded-lg border-2 border-slate-200 px-2 py-1"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            type="Text"
+          />
+        </div>
+        <div>
+          <a target="_blank" href={`/drafts/preview/${id}`}>
+            Preview
+          </a>
+          <button
+            onClick={() => {
+              saveDraft({ id, title: title, content: value });
+            }}
+          >
+            Save
+          </button>
+          <button
+            onClick={() => {
+              publishDraft({ draftId: id, title: title, content: value });
+            }}
+          >
+            Publish
+          </button>
+        </div>
+      </div>
       <Editor value={value} setValue={setValue} />
+      <p className="text-center text-xs text-slate-400">
+        {"Please preview your post before publishing, as the result doesn't always match what you see in the editor"}
+      </p>
     </div>
   );
 };

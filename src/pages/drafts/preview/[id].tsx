@@ -3,7 +3,6 @@ import { api } from "~/utils/api";
 import parse from "html-react-parser";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import type { GetStaticProps, NextPage } from "next";
-import Link from "next/link";
 
 const DraftPreview: NextPage<{ id: string }> = ({ id }) => {
   const { data } = api.drafts.getOneById.useQuery({ id });
@@ -11,13 +10,12 @@ const DraftPreview: NextPage<{ id: string }> = ({ id }) => {
 
   const { title, content } = data;
   return (
-    <div className="flex flex-col items-center">
+    <div className="mx-auto flex w-9/12 flex-col">
       <Head>
-        <title>{title} | Draft</title>
+        <title>{title}</title>
       </Head>
-      <Link href={`/drafts/${id}`}>Go back to Editor</Link>
-      <h1 className="text-2xl ">{title}</h1>
-      <div>{parse(content)}</div>
+      <h1 className="w-full text-3xl font-bold">{title}</h1>
+      <div className="my-4 text-justify leading-relaxed">{parse(content)}</div>
     </div>
   );
 };

@@ -60,7 +60,7 @@ model BlogPost {
   id       String       @id @default(cuid())
   publishedAt DateTime @default(now())
   title    String
-  content  String       @db.VarChar(3000)
+  content  String       @db.VarChar(5000)
   userId   String
   user     User      @relation(fields: [userId], references: [id])
   comments Comment[]
@@ -86,7 +86,7 @@ model Comment {
 model Draft {
   id       String       @id @default(cuid())
   title    String
-  content  String
+  content  String       @db.VarChar(5000)
   userId   String
   user     User      @relation(fields: [userId], references: [id])
 }
