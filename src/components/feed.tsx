@@ -10,7 +10,7 @@ const Feed = () => {
   if (!data) return <div>No posts to show :(</div>;
 
   return (
-    <div className="flex w-8/12 flex-col gap-4 p-2">
+    <div className="grid w-10/12 grid-cols-2 gap-5 p-2 lg:grid-cols-3">
       {data.map((post) => {
         return (
           <div key={post.id} className="items-left flex flex-col">
@@ -19,11 +19,11 @@ const Feed = () => {
               href={`/user/${post.userId}`}
             >
               {post.user.image && (
-                <img className="h-4 w-4 rounded-full" src={post.user.image} />
+                <img className="h-5 w-5 rounded-full" src={post.user.image} />
               )}
               {post.user.name}
             </Link>
-            <Link className="text-xl font-bold" href={`/post/${post.id}`}>
+            <Link className="font-bold" href={`/post/${post.id}`}>
               {post.title}
             </Link>
           </div>

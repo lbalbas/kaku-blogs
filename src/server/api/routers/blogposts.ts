@@ -20,7 +20,7 @@ export const blogPostsRouter = createTRPCRouter({
     }),
   getMostRecent: publicProcedure.query(async ({ ctx }) => {
     return ctx.prisma.blogPost.findMany({
-      take: 10,
+      take: 9,
       orderBy: {
         publishedAt: "desc",
       },
