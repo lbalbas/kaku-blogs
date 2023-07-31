@@ -13,7 +13,7 @@ export const blogPostsRouter = createTRPCRouter({
         where: { id: input.id },
         include: {
           user: true,
-        }
+        },
       });
 
       return result;

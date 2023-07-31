@@ -19,7 +19,7 @@ const Feed = () => {
               href={`/user/${post.userId}`}
             >
               {post.user.image && (
-                <img className="h-4 w-4" src={post.user.image} />
+                <img className="h-4 w-4 rounded-full" src={post.user.image} />
               )}
               {post.user.name}
             </Link>
