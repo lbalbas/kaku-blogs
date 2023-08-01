@@ -7,8 +7,8 @@ import { faPenNib } from "@fortawesome/free-solid-svg-icons";
 const Navbar = () => {
   const { data: sessionData } = useSession();
   return (
-    <nav>
-      <div className="mx-auto flex w-11/12 items-center justify-between py-5">
+    <nav className="bg-hgreen text-mcream">
+      <div className="mx-auto flex w-11/12 items-center justify-between py-4">
         <Link className="font-bold tracking-wide" href="/">
           Home
         </Link>

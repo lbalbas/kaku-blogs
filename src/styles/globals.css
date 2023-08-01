@@ -5,3 +5,10 @@
 .ql-snow .ql-tooltip::before {
   content: "Image URL:" !important;
 }
+.landing{
+  background-image: url("/type.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-origin: content-box;
+  background-size: contain;
+}
