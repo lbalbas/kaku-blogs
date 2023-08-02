@@ -70,4 +70,28 @@ export const blogPostsRouter = createTRPCRouter({
         ctx.prisma.draft.delete({ where: { id: input.draftId } }),
       ]);
     }),
+  search: publicProcedure
+    .input(z.object({ query: z.string().min(1) }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.blogPost.findMany({
+        where: {
+          title: {
+            search: input.query,
+          },
+          content: {
+            search: input.query,
+          },
+        },
+        orderBy: {
+          _relevance: {
+            fields: ["title"],
+            search: input.query,
+            sort: "asc",
+          },
+        },
+        include: {
+          user: true,
+        },
+      });
+    }),
 });

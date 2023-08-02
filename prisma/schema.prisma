@@ -6,6 +6,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 model Account {
@@ -64,6 +65,9 @@ model BlogPost {
   userId   String
   user     User      @relation(fields: [userId], references: [id])
   comments Comment[]
+
+  @@fulltext([title])
+  @@fulltext([content, title])
 }
 
 model Comment {
