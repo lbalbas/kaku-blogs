@@ -15,7 +15,7 @@ const BlogPost: NextPage<{ id: string }> = ({ id }) => {
 
   const { title, content, publishedAt } = data;
   return (
-    <div className="mx-auto flex py-16 w-9/12 flex-col">
+    <div className="mx-auto flex w-9/12 flex-col py-16">
       <Head>
         <title>{title}</title>
       </Head>

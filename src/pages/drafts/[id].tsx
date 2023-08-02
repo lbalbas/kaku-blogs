@@ -83,7 +83,9 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
       </div>
       <Editor value={value} setValue={setValue} />
       <p className="text-center text-xs text-slate-400">
-        {"Please preview your post before publishing, as the result doesn't always match what you see in the editor"}
+        {
+          "Please preview your post before publishing, as the result doesn't always match what you see in the editor"
+        }
       </p>
     </div>
   );

@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <>
       <Navbar />
       <main className="mx-auto flex-col">{children}</main>
-      <footer className="bg-hgreen text-white py-4 text-center">
+      <footer className="bg-hgreen py-4 text-center text-white">
         Developed by{" "}
         <a className="underline" href="https://github.com/lbalbas">
           Luis Balbás
