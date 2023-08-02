@@ -29,7 +29,7 @@ const Search: NextPage<{ query: string }> = ({ query }) => {
                 <img
                   className="h-6 w-6 rounded-full"
                   src={post.user.image!}
-                  alt={`${post.user.name} profile's picture`}
+                  alt={`Author's profile picture`}
                 />
                 <span>{post.user.name}</span>
               </Link>
