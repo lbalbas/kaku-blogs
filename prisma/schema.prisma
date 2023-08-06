@@ -72,7 +72,7 @@ model BlogPost {
 
 model Comment {
   id               String      @id @default(cuid())
-  content          String
+  content          String       @db.VarChar(300)
   userId           String
   user             User     @relation(fields: [userId], references: [id])
   blogPostId       String
