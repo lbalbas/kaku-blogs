@@ -1,31 +1,39 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure, protectedProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  publicProcedure,
+  protectedProcedure,
+} from "~/server/api/trpc";
 
 export const commentsRouter = createTRPCRouter({
-	getCommentsByPost: publicProcedure.input(z.object({post: z.string()})).query(async({ctx, input})=>{
-		const comments = await ctx.prisma.comment.findMany({
-			where: {
-				blogPostId: input.post,
-			},
-			include: {
-				user: true,
-			},
-			orderBy: {
-			    createdAt: 'asc',
-			}
-		})
-		return commentsToTree(comments);
-	}),
-	makeComment: protectedProcedure.input(z.object({post: z.string(), content: z.string().min(1)})).mutation(async({ctx, input}) =>{
-		return await ctx.prisma.comment.create({
-			data: {
-				content: input.content,
-				blogPostId: input.post,
-				userId: ctx.session.user.id,
-			}
-		})
-	})
-})
+  getCommentsByPost: publicProcedure
+    .input(z.object({ post: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const comments = await ctx.prisma.comment.findMany({
+        where: {
+          blogPostId: input.post,
+        },
+        include: {
+          user: true,
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      });
+      return commentsToTree(comments);
+    }),
+  makeComment: protectedProcedure
+    .input(z.object({ post: z.string(), content: z.string().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.comment.create({
+        data: {
+          content: input.content,
+          blogPostId: input.post,
+          userId: ctx.session.user.id,
+        },
+      });
+    }),
+});
 
 interface Comment {
   id: string;
@@ -56,7 +64,8 @@ function commentsToTree(comments: Comment[]) {
   // connect child comments to their parent and gather root comments
   let roots: Comment[] = [];
   comments.forEach((comment) => {
-    if (!comment.parentCommentId) { // is a root comment
+    if (!comment.parentCommentId) {
+      // is a root comment
       roots.push(comment);
     } else {
       // it is guaranteed to exist

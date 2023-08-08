@@ -3,7 +3,7 @@ import { api } from "~/utils/api";
 import parse from "html-react-parser";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import type { GetStaticProps, NextPage } from "next";
-import Comments from '~/components/comments';
+import Comments from "~/components/comments";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
@@ -38,7 +38,7 @@ const BlogPost: NextPage<{ id: string }> = ({ id }) => {
       </div>
       <div className="my-4 text-justify leading-relaxed">{parse(content)}</div>
       <h3>Comments</h3>
-      <Comments post={data.id}/>
+      <Comments post={data.id} />
     </div>
   );
 };
