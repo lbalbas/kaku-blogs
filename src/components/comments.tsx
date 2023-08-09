@@ -26,6 +26,8 @@ interface Comment {
 
 const Comments = (props: { post: string }) => {
   const [comment, setComment] = useState("");
+  const [replyTo, setReplyTo] = useState<string | null>(null);
+  const [reply, setReply] = useState("");
   const { post } = props;
   const { data, isLoading } = api.comments.getCommentsByPost.useQuery(
     { post },
@@ -35,8 +37,20 @@ const Comments = (props: { post: string }) => {
       },
     }
   );
-  const { mutate, isLoading: isPosting } =
-    api.comments.makeComment.useMutation();
+  const { mutate: replyToComment, isLoading: isReplying } =
+    api.comments.replyToComment.useMutation({
+      onSuccess: () => {
+        setReply("");
+        setReplyTo(null);
+      },
+    });
+  const { mutate: commentOnPost, isLoading: isPosting } =
+    api.comments.makeComment.useMutation({
+      onSuccess: () => {
+        setComment("");
+        //toast
+      },
+    });
 
   if (isLoading) return <LoadingBlock size={18} />;
 
@@ -63,8 +77,34 @@ const Comments = (props: { post: string }) => {
           </div>
           <p>{comment.content}</p>
           <div>
-            <button>Reply</button>
+            <button
+              onClick={() => {
+                setReplyTo(comment.id);
+              }}
+            >
+              Reply
+            </button>
           </div>
+          {replyTo === comment.id && (
+            <div>
+              <textarea
+                value={reply}
+                onChange={(e) => setReply(e.target.value)}
+              />
+              <button
+                onClick={() =>
+                  replyToComment({
+                    content: reply,
+                    post,
+                    parentCommentId: comment.id,
+                  })
+                }
+              >
+                Reply
+              </button>
+              <button onClick={() => setReplyTo(null)}>Cancel</button>
+            </div>
+          )}
           {comment.childComments && comment.childComments.length > 0 ? (
             <div className="pl-4">{renderComments(comment.childComments)}</div>
           ) : (
@@ -84,7 +124,7 @@ const Comments = (props: { post: string }) => {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
-        <button onClick={() => mutate({ content: comment, post })}>
+        <button onClick={() => commentOnPost({ content: comment, post })}>
           Comment
         </button>
       </div>

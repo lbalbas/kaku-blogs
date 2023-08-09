@@ -33,6 +33,24 @@ export const commentsRouter = createTRPCRouter({
         },
       });
     }),
+  replyToComment: protectedProcedure
+    .input(
+      z.object({
+        post: z.string(),
+        content: z.string().min(1),
+        parentCommentId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.comment.create({
+        data: {
+          content: input.content,
+          blogPostId: input.post,
+          userId: ctx.session.user.id,
+          parentCommentId: input.parentCommentId,
+        },
+      });
+    }),
 });
 
 interface Comment {
@@ -53,7 +71,7 @@ interface Comment {
 }
 
 function commentsToTree(comments: Comment[]) {
-  let commentMap: { [key: string]: Comment } = {};
+  const commentMap: { [key: string]: Comment } = {};
 
   // make a map for fast lookup
   comments.forEach((comment) => {
@@ -62,7 +80,7 @@ function commentsToTree(comments: Comment[]) {
   });
 
   // connect child comments to their parent and gather root comments
-  let roots: Comment[] = [];
+  const roots: Comment[] = [];
   comments.forEach((comment) => {
     if (!comment.parentCommentId) {
       // is a root comment
