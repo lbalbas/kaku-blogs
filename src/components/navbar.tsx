@@ -44,7 +44,11 @@ const UserMenu = (props: {
         Drafts
       </Link>
       <div className="flex items-center gap-2">
-        <img className="h-6 w-6 rounded-full" src={props.user.image!} />
+        <img
+          alt="Your profile picture"
+          className="h-6 w-6 rounded-full"
+          src={props.user.image!}
+        />
         <span>{props.user.name}</span>
       </div>
     </div>

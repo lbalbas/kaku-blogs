@@ -4,7 +4,8 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
-
+import { LoadingSpinner } from "./loading";
+import toast from "react-hot-toast";
 dayjs.extend(relativeTime);
 
 interface Comment {
@@ -28,7 +29,13 @@ const Comments = (props: { post: string }) => {
   const [comment, setComment] = useState("");
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [reply, setReply] = useState("");
+
+  const [expandedComments, setExpandedComments] = useState<string[]>([]);
+
   const { post } = props;
+
+  const ctx = api.useContext();
+
   const { data, isLoading } = api.comments.getCommentsByPost.useQuery(
     { post },
     {
@@ -37,18 +44,23 @@ const Comments = (props: { post: string }) => {
       },
     }
   );
-  const { mutate: replyToComment, isLoading: isReplying } =
-    api.comments.replyToComment.useMutation({
-      onSuccess: () => {
-        setReply("");
-        setReplyTo(null);
-      },
-    });
+
   const { mutate: commentOnPost, isLoading: isPosting } =
     api.comments.makeComment.useMutation({
       onSuccess: () => {
         setComment("");
-        //toast
+        toast.success("Commented successfully!");
+        void ctx.comments.getCommentsByPost.invalidate();
+      },
+    });
+
+  const { mutate: replyToComment, isLoading: isReplying } =
+    api.comments.replyToComment.useMutation({
+      onSuccess: () => {
+        toast.success("Replied successfully!");
+        setReply("");
+        setReplyTo(null);
+        void ctx.comments.getCommentsByPost.invalidate();
       },
     });
 
@@ -56,34 +68,36 @@ const Comments = (props: { post: string }) => {
 
   if (!data) return <div>Something went wrong!</div>;
 
-  const renderComments = (comments: Comment[]) => {
+  const renderComments = (comments: Comment[], depth: number = 0) => {
     return comments.map((comment) => {
-      console.log(comment);
       return (
-        <div key={comment.id} className="flex flex-col">
-          <div className="flex items-center gap-4">
-            <Link
-              href={`/user/${comment.user.id}`}
-              className="flex items-center gap-1"
-            >
-              <img
-                className="h-6 w-6 rounded-full"
-                src={comment.user.image!}
-                alt="Profile picture"
-              />
-              <span className="text-sm font-bold">{comment.user.name}</span>
-            </Link>
-            <span className="text-xs italic text-slate-500"></span>
-          </div>
-          <p>{comment.content}</p>
-          <div>
-            <button
-              onClick={() => {
-                setReplyTo(comment.id);
-              }}
-            >
-              Reply
-            </button>
+        <div key={comment.id} className="my-3 flex w-full flex-col">
+          <div className="flex flex-col border-l-4 border-hgreen pl-4">
+            <div className="flex items-center gap-4">
+              <Link
+                href={`/user/${comment.user.id}`}
+                className="flex items-center gap-1"
+              >
+                <img
+                  className="h-6 w-6 rounded-full"
+                  src={comment.user.image!}
+                  alt="Profile picture"
+                />
+                <span className="text-sm font-bold">{comment.user.name}</span>
+              </Link>
+              <span className="text-xs italic text-slate-500"></span>
+            </div>
+            <p>{comment.content}</p>
+            <div>
+              <button
+                className="text-xs text-slate-500"
+                onClick={() => {
+                  setReplyTo(comment.id);
+                }}
+              >
+                Reply
+              </button>
+            </div>
           </div>
           {replyTo === comment.id && (
             <div>
@@ -92,6 +106,8 @@ const Comments = (props: { post: string }) => {
                 onChange={(e) => setReply(e.target.value)}
               />
               <button
+                disabled={isReplying}
+                className="flex justify-center"
                 onClick={() =>
                   replyToComment({
                     content: reply,
@@ -100,13 +116,28 @@ const Comments = (props: { post: string }) => {
                   })
                 }
               >
-                Reply
+                {isReplying ? <LoadingSpinner size={16} /> : "Reply"}
               </button>
               <button onClick={() => setReplyTo(null)}>Cancel</button>
             </div>
           )}
           {comment.childComments && comment.childComments.length > 0 ? (
-            <div className="pl-4">{renderComments(comment.childComments)}</div>
+            depth < 2 || expandedComments.includes(comment.id) ? (
+              <div className="-my-2 pl-4">
+                {renderComments(comment.childComments, depth + 1)}
+              </div>
+            ) : (
+              <button
+                onClick={() =>
+                  setExpandedComments([
+                    ...expandedComments,
+                    ...getAllChildCommentIds(comment),
+                  ])
+                }
+              >
+                Show more
+              </button>
+            )
           ) : (
             ""
           )}
@@ -115,8 +146,18 @@ const Comments = (props: { post: string }) => {
     });
   };
 
+  const getAllChildCommentIds = (comment: Comment) => {
+    let ids = [comment.id];
+    if (comment.childComments) {
+      comment.childComments.forEach((childComment) => {
+        ids = ids.concat(getAllChildCommentIds(childComment));
+      });
+    }
+    return ids;
+  };
+
   return (
-    <div className="flex flex-col">
+    <div className="flex w-full flex-col">
       <div className="flex flex-col">
         <textarea
           maxLength={300}
@@ -124,14 +165,18 @@ const Comments = (props: { post: string }) => {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
-        <button onClick={() => commentOnPost({ content: comment, post })}>
-          Comment
+        <button
+          className="flex justify-center"
+          disabled={isPosting}
+          onClick={() => commentOnPost({ content: comment, post })}
+        >
+          {isPosting ? <LoadingSpinner size={16} /> : "Comment"}
         </button>
       </div>
       {data.length == 0 ? (
         <p>No comments yet, be the first one!</p>
       ) : (
-        renderComments(data)
+        renderComments(data, 0)
       )}
     </div>
   );

@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useState, useRef, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import type { Quill } from "quill";
 
 type QuillProps = {
