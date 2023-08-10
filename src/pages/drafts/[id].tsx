@@ -31,7 +31,7 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
     api.blogs.publish.useMutation({
       onSuccess: (data) => {
         toast.success("Published successfully, redirecting to post.");
-        void router.push(`/post/${data.id}`);
+        void router.push(`/post/${data[0].id}`);
       },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors.content;

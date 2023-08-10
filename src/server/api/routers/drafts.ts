@@ -8,6 +8,9 @@ export const draftsRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const result = await ctx.prisma.draft.findFirst({
         where: { id: input.id, userId: ctx.session.user.id },
+        include: {
+          user: true,
+        },
       });
 
       if (result == null)

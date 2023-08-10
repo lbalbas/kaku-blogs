@@ -12,3 +12,13 @@
   background-origin: content-box;
   background-size: contain;
 }
+
+ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+
+ul {
+  list-style-type: circle;
+  list-style-position: inside;
+}
