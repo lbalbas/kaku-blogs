@@ -39,7 +39,7 @@ const UserMenu = (props: {
 }) => {
   return (
     <div className="flex items-center justify-end gap-6">
-      <Link className="font-bold tracking-wide" href="/drafts">
+      <Link className="flex items-center gap-1 font-bold tracking-wide" href="/drafts">
         <FontAwesomeIcon size="sm" icon={faPenNib} />
         Drafts
       </Link>
