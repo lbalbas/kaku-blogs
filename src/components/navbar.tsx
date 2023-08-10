@@ -8,7 +8,7 @@ const Navbar = () => {
   const { data: sessionData } = useSession();
   return (
     <nav className="bg-hgreen text-mcream">
-      <div className="mx-auto flex w-11/12 items-center justify-between py-4">
+      <div className="mx-auto flex w-11/12 max-w-[1440px] items-center justify-between py-4">
         <Link className="font-bold tracking-wide" href="/">
           Home
         </Link>
@@ -39,7 +39,10 @@ const UserMenu = (props: {
 }) => {
   return (
     <div className="flex items-center justify-end gap-6">
-      <Link className="flex items-center gap-1 font-bold tracking-wide" href="/drafts">
+      <Link
+        className="flex items-center gap-1 font-bold tracking-wide"
+        href="/drafts"
+      >
         <FontAwesomeIcon size="sm" icon={faPenNib} />
         Drafts
       </Link>

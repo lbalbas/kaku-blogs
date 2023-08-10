@@ -11,7 +11,7 @@ export const LoadingSpinner = (props: { size: number }) => {
     <div role="status">
       <svg
         aria-hidden="true"
-        className={`mr-2 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600`}
+        className={`animate-spin fill-blue-600 text-gray-200 dark:text-gray-600`}
         viewBox="0 0 100 101"
         fill="none"
         width={props.size ?? 28}

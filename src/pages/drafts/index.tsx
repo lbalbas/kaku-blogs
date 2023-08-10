@@ -28,31 +28,34 @@ const Drafts = () => {
   if (isLoading) return <LoadingBlock size={32} />;
 
   return (
-    <div className="py-10 w-10/12 max-w-[1440px] mx-auto gap-6 flex flex-col">
+    <div className="mx-auto flex w-10/12 max-w-[1440px] flex-col gap-6 py-10">
       <Head>
         <title>Drafts | Kaku Blogs</title>
       </Head>
       <h1 className="text-2xl font-bold">Your Drafts</h1>
-      <div className="items-center justify-center flex flex-wrap gap-4">
-      {!drafts || drafts.length == 0 ? (
-        <div className="py-4">No Drafts yet!</div>
-      ) : (
-        drafts.map((draft) => {
-          return (
-            <Link className="w-full p-2 rounded-2xl  border-2 border-slate-300" key={draft.id} href={`/drafts/${draft.id}`}>
-              
-              {draft.title}
-            </Link>
-          );
-        })
-      )}
+      <div className="flex flex-wrap items-center justify-center gap-4">
+        {!drafts || drafts.length == 0 ? (
+          <div className="py-4">No Drafts yet!</div>
+        ) : (
+          drafts.map((draft) => {
+            return (
+              <Link
+                className="w-full rounded-2xl border-2  border-slate-300 p-2"
+                key={draft.id}
+                href={`/drafts/${draft.id}`}
+              >
+                {draft.title}
+              </Link>
+            );
+          })
+        )}
       </div>
       <button
         disabled={isPosting}
         onClick={() => mutate()}
-        className="self-end flex items-center gap-2 rounded-3xl w-fit bg-uviolet text-white px-3 py-2"
+        className="flex w-fit items-center gap-2 self-end rounded-3xl bg-uviolet px-3 py-2 text-white"
       >
-        <FontAwesomeIcon size="sm" icon={faPenNib} /> 
+        <FontAwesomeIcon size="sm" icon={faPenNib} />
         New Draft
       </button>
     </div>

@@ -68,7 +68,7 @@ const Comments = (props: { post: string }) => {
 
   if (!data) return <div>Something went wrong!</div>;
 
-  const renderComments = (comments: Comment[], depth: number = 0) => {
+  const renderComments = (comments: Comment[], depth = 0) => {
     return comments.map((comment) => {
       return (
         <div key={comment.id} className="my-3 flex w-full flex-col">

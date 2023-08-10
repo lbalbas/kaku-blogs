@@ -3,17 +3,19 @@ import { api } from "~/utils/api";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import LoadingBlock from "~/components/loading";
+import { LoadingSpinner } from "~/components/loading";
 import { TRPCError } from "@trpc/server";
 import { useState } from "react";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import type { GetStaticProps, NextPage } from "next";
+import toast from "react-hot-toast";
 
 const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
   const [value, setValue] = useState("");
   const [title, setTitle] = useState("");
   const router = useRouter();
 
-  const { data } = api.drafts.getOneById.useQuery(
+  const { data, isLoading } = api.drafts.getOneById.useQuery(
     {
       id,
     },
@@ -27,30 +29,64 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
 
   const { mutate: publishDraft, isLoading: isPosting } =
     api.blogs.publish.useMutation({
+      onSuccess: (data) => {
+        toast.success("Published successfully, redirecting to post.");
+        void router.push(`/post/${data.id}`);
+      },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors.content;
         if (errorMessage && errorMessage[0]) {
           console.log(errorMessage[0]);
+          toast.error(errorMessage[0]);
         } else {
-          console.log("Failed to post! Please try again later.");
+          toast.error("Failed to publish! Please try again later.");
         }
       },
     });
 
   const { mutate: saveDraft, isLoading: isSaving } =
     api.drafts.save.useMutation({
+      onSuccess: () => {
+        toast.success("Saved successfully.");
+      },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors.content;
         if (errorMessage && errorMessage[0]) {
           console.log(errorMessage[0]);
+          toast.error(errorMessage[0]);
         } else {
-          console.log("Failed to post! Please try again later.");
+          toast.error("Failed to save! Please try again later.");
         }
       },
     });
 
+  if (isLoading) return <LoadingBlock size={24} />;
+
   return (
-    <div>
+    <div className="mx-auto min-h-[80vh] w-10/12 py-10">
+      <div className="flex items-center justify-end gap-2">
+        <a target="_blank" href={`/drafts/preview/${id}`}>
+          Preview
+        </a>
+        <button
+          disabled={isSaving}
+          className="flex w-20 items-center justify-center  rounded-3xl bg-emerald-400 px-4 py-2 text-white"
+          onClick={() => {
+            saveDraft({ id, title: title, content: value });
+          }}
+        >
+          {isSaving ? <LoadingSpinner size={24} /> : "Save"}
+        </button>
+        <button
+          disabled={isPosting}
+          className="flex items-center justify-center rounded-3xl bg-uviolet px-4 py-2 text-white"
+          onClick={() => {
+            publishDraft({ draftId: id, title: title, content: value });
+          }}
+        >
+          {isPosting ? <LoadingSpinner size={24} /> : "Publish"}
+        </button>
+      </div>
       <div className="flex items-center justify-between">
         <div className="flex flex-grow flex-col">
           <span className="font-bold">Title</span>
@@ -58,27 +94,8 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
             className="rounded-lg border-2 border-slate-200 px-2 py-1"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            type="Text"
+            type="text"
           />
-        </div>
-        <div>
-          <a target="_blank" href={`/drafts/preview/${id}`}>
-            Preview
-          </a>
-          <button
-            onClick={() => {
-              saveDraft({ id, title: title, content: value });
-            }}
-          >
-            Save
-          </button>
-          <button
-            onClick={() => {
-              publishDraft({ draftId: id, title: title, content: value });
-            }}
-          >
-            Publish
-          </button>
         </div>
       </div>
       <Editor value={value} setValue={setValue} />
