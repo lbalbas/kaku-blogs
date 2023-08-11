@@ -16,7 +16,7 @@ const BlogPost: NextPage<{ id: string }> = ({ id }) => {
 
   const { title, content, publishedAt } = data;
   return (
-    <div className="mx-auto flex w-9/12 flex-col py-16">
+    <div className="mx-auto flex w-10/12 flex-col py-10 md:w-9/12">
       <Head>
         <title>{title}</title>
       </Head>
@@ -28,7 +28,7 @@ const BlogPost: NextPage<{ id: string }> = ({ id }) => {
           alt="Author's profile picture"
         />
         <div className="flex flex-col">
-          <Link className="font-bold" href={`/user/${data.user.id}`}>
+          <Link className="text-slate-600 font-bold" href={`/user/${data.user.id}`}>
             {data.user.name}
           </Link>
           <span className="text-sm text-slate-500">{`${dayjs().to(
@@ -36,8 +36,7 @@ const BlogPost: NextPage<{ id: string }> = ({ id }) => {
           )}`}</span>
         </div>
       </div>
-      <div className="my-4 text-justify leading-relaxed">{parse(content)}</div>
-      <h3>Comments</h3>
+      <div className="py-4 text-justify leading-relaxed border-b-2 border-slate-100">{parse(content)}</div>
       <Comments post={data.id} />
     </div>
   );

@@ -23,7 +23,7 @@ const DraftPreview: NextPage<{ id: string }> = ({ id }) => {
           alt="Author's profile picture"
         />
         <div className="flex flex-col">
-          <Link className="font-bold" href={`/user/${data.user.id}`}>
+          <Link className="text-slate-600 font-bold" href={`/user/${data.user.id}`}>
             {data.user.name}
           </Link>
           <span className="text-sm text-slate-500">5 minutes ago</span>
