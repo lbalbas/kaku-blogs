@@ -63,7 +63,7 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
   if (isLoading) return <LoadingBlock size={24} />;
 
   return (
-    <div className="mx-auto min-h-[80vh] w-10/12 py-10">
+    <div className="mx-auto w-10/12 py-10">
       <div className="flex items-center justify-end gap-2">
         <a target="_blank" href={`/drafts/preview/${id}`}>
           Preview
