@@ -13,18 +13,18 @@ const Search: NextPage<{ query: string }> = ({ query }) => {
 
   if (!data || data.length == 0) return <div>No matching results :(</div>;
   return (
-    <div className="mx-auto flex w-9/12 flex-col py-16">
+    <div className="mx-auto flex w-11/12 flex-col gap-3 py-10 md:w-10/12">
       <Head>
-        <title>{`Searching ${query}`}</title>
+        <title>{`Searching for "${query}"`}</title>
       </Head>
-      <h1 className="w-full text-3xl font-bold">{`Searching ${query}`}</h1>
+      <h1 className="w-full text-3xl font-bold">{`Searching for "${query}"`}</h1>
       <div className="flex flex-col gap-4">
         {data.map((post) => {
           return (
-            <div className="flex flex-col" key={post.id}>
-              <Link className="text-xl font-bold" href={`/post/${post.id}`}>
-                {post.title}
-              </Link>
+            <div
+              className="flex flex-col justify-center border-l-4 border-uviolet p-3 pl-4"
+              key={post.id}
+            >
               <Link href={`/user/${post.user.id}`} className="flex gap-2">
                 <img
                   className="h-6 w-6 rounded-full"
@@ -33,6 +33,12 @@ const Search: NextPage<{ query: string }> = ({ query }) => {
                 />
                 <span>{post.user.name}</span>
               </Link>
+              <Link className="text-xl font-bold" href={`/post/${post.id}`}>
+                {post.title}
+              </Link>
+              <span className="text-sm text-slate-500">{`${dayjs().to(
+                dayjs(post.publishedAt)
+              )}`}</span>
             </div>
           );
         })}

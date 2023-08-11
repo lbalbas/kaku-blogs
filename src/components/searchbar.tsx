@@ -2,13 +2,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { LoadingSpinner } from "./loading";
 
 const SearchBar = () => {
   const router = useRouter();
   const [search, setSearch] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
-  const redirectToSearch = () => {
+  const redirectToSearch = async () => {
+    setLoading(true);
     void router.push(`/search/${search}`);
+    setLoading(false);
   };
   return (
     <div className="max-w-96 relative flex w-3/6 items-center text-uviolet">
@@ -28,9 +32,13 @@ const SearchBar = () => {
       />
       <button
         onClick={redirectToSearch}
-        className="rounded-r-xl border-2 bg-vanilla px-2 py-1"
+        className="w-16 rounded-r-xl border-2 bg-isabel px-4 py-1"
       >
-        Search
+        {isLoading ? (
+          <LoadingSpinner size={24} />
+        ) : (
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+        )}
       </button>
     </div>
   );
