@@ -9,10 +9,9 @@ const SearchBar = () => {
   const [search, setSearch] = useState("");
   const [isLoading, setLoading] = useState(false);
 
-  const redirectToSearch = async () => {
+  const redirectToSearch = () => {
     setLoading(true);
-    void router.push(`/search/${search}`);
-    setLoading(false);
+    void router.push(`/search/${search}`).then(()=>{setLoading(false)});
   };
   return (
     <div className="max-w-96 relative flex w-3/6 items-center text-uviolet">
@@ -32,6 +31,7 @@ const SearchBar = () => {
       />
       <button
         onClick={redirectToSearch}
+        disabled={isLoading}
         className="w-16 rounded-r-xl border-2 bg-isabel px-4 py-1"
       >
         {isLoading ? (
