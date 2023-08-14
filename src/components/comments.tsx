@@ -110,7 +110,7 @@ const Comments = (props: { post: string }) => {
                   src={comment.user.image!}
                   alt="Profile picture"
                 />
-                <span className="text-sm font-bold">{comment.user.name}</span>
+                <span className="text-sm font-bold text-slate-700">{comment.user.name}</span>
               </Link>
               <span className="text-xs italic text-slate-500"></span>
             </div>
@@ -141,7 +141,7 @@ const Comments = (props: { post: string }) => {
               <button className="hover:text-red-500 hover:underline" onClick={() => setReplyTo(null)}>Cancel</button>
               <button
                 disabled={isReplying}
-                className="flex w-fit justify-center items-center self-end rounded-3xl bg-uviolet w-24 gap-1 py-2 text-white"
+                className="flex justify-center items-center self-end rounded-3xl bg-uviolet w-32 gap-1 py-2 text-white"
                 onClick={() =>
                   replyToComment({
                     content: reply,
@@ -156,11 +156,12 @@ const Comments = (props: { post: string }) => {
           )}
           {comment.childComments && comment.childComments.length > 0 ? (
             depth < 2 || expandedComments.includes(comment.id) ? (
-              <div className="my-3 flex flex-col gap-3 pl-4">
+              <div className="mt-3 flex flex-col gap-3 pl-4">
                 {renderComments(comment.childComments, depth + 1)}
               </div>
             ) : (
               <button
+                className="pl-6 p-2 w-full text-left text-sm text-blue-500 hover:underline"
                 onClick={() =>
                   setExpandedComments([
                     ...expandedComments,
@@ -168,7 +169,7 @@ const Comments = (props: { post: string }) => {
                   ])
                 }
               >
-                Show more
+                (expand comments)
               </button>
             )
           ) : (
@@ -201,7 +202,7 @@ const Comments = (props: { post: string }) => {
             onChange={(e) => setComment(e.target.value)}
           />
           <button
-            className="flex w-fit justify-center items-center self-end rounded-3xl bg-emerald-500 w-28 gap-1 py-2 text-white"
+            className="flex justify-center items-center self-end rounded-3xl bg-emerald-500 w-36 px-4 gap-1 py-2 text-white"
             disabled={isPosting}
             onClick={() => commentOnPost({ content: comment, post })}
           >

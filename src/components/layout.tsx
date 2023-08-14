@@ -4,7 +4,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col justify-between">
       <Navbar />
-      <main className="mx-auto w-full max-w-[1440px] flex-grow flex-col">
+      <main className="mx-auto w-full max-w-[1440px] flex-grow flex">
         {children}
       </main>
       <footer className="bg-hgreen py-4 text-center text-white">

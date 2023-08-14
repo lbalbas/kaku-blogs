@@ -20,21 +20,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <Toaster
         position={"top-center"}
         toastOptions={{
-          duration: 4000,
-
-          // Styling
-          style: {},
-          className: "",
-
-          // Custom Icon
-
-          // Change colors of success/error/loading icon
-          iconTheme: {
-            primary: "#000",
-            secondary: "#fff",
-          },
-
-          // Aria
+          duration: 5000,
           ariaProps: {
             role: "status",
             "aria-live": "polite",

@@ -2,6 +2,7 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 import Link from "next/link";
 import LoadingBlock from "~/components/loading";
+import {LoadingSpinner} from '~/components/loading';
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,7 +20,7 @@ const Drafts = () => {
     undefined,
     {
       onError: (e) => {
-        toast.error("Please LogIn and try again.");
+        toast.error("Please Login and try again.");
         void router.push("/");
       },
     }
@@ -53,10 +54,9 @@ const Drafts = () => {
       <button
         disabled={isPosting}
         onClick={() => mutate()}
-        className="flex w-fit items-center gap-2 self-end rounded-3xl bg-uviolet px-3 py-2 text-white"
+        className="flex h-fit justify-center items-center self-end rounded-3xl bg-uviolet w-32 gap-1 py-2 text-white"
       >
-        <FontAwesomeIcon size="sm" icon={faPenNib} />
-        New Draft
+        {isPosting ? <LoadingSpinner size={24} />: (<><FontAwesomeIcon size="sm" icon={faPenNib} />New Draft</>)}
       </button>
     </div>
   );
