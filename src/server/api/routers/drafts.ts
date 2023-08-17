@@ -14,10 +14,7 @@ export const draftsRouter = createTRPCRouter({
       });
 
       if (result == null)
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "This draft doesn't exist or is not yours.",
-        });
+        throw new Error("This draft doesn't exist or is not yours.");
 
       return result;
     }),
@@ -46,9 +43,11 @@ export const draftsRouter = createTRPCRouter({
         },
       });
 
-      if (!draft) {
-        return { status: 403, msg: "Unauthorized" };
-      }
+      if (!draft)
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "This draft doesn't exist or is not yours.",
+        });
 
       await ctx.prisma.draft.update({
         where: { id: input.id },
@@ -56,6 +55,28 @@ export const draftsRouter = createTRPCRouter({
           title: input.title,
           content: input.content,
         },
+      });
+
+      return { status: 200, msg: "Success" };
+    }),
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const draft = await ctx.prisma.draft.findFirst({
+        where: {
+          id: input.id,
+          userId: ctx.session.user.id,
+        },
+      });
+
+      if (!draft)
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "This draft doesn't exist or is not yours.",
+        });
+
+      await ctx.prisma.draft.delete({
+        where: { id: input.id },
       });
 
       return { status: 200, msg: "Success" };

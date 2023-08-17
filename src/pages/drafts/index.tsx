@@ -2,7 +2,7 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 import Link from "next/link";
 import LoadingBlock from "~/components/loading";
-import {LoadingSpinner} from '~/components/loading';
+import { LoadingSpinner } from "~/components/loading";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -54,9 +54,16 @@ const Drafts = () => {
       <button
         disabled={isPosting}
         onClick={() => mutate()}
-        className="flex h-fit justify-center items-center self-end rounded-3xl bg-uviolet w-32 gap-1 py-2 text-white"
+        className="flex h-fit w-32 items-center justify-center gap-1 self-end rounded-3xl bg-uviolet py-2 text-white"
       >
-        {isPosting ? <LoadingSpinner size={24} />: (<><FontAwesomeIcon size="sm" icon={faPenNib} />New Draft</>)}
+        {isPosting ? (
+          <LoadingSpinner size={24} />
+        ) : (
+          <>
+            <FontAwesomeIcon size="sm" icon={faPenNib} />
+            New Draft
+          </>
+        )}
       </button>
     </div>
   );

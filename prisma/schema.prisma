@@ -76,7 +76,7 @@ model Comment {
   userId           String
   user             User     @relation(fields: [userId], references: [id])
   blogPostId       String
-  blogPost         BlogPost @relation(fields: [blogPostId], references: [id])
+  blogPost         BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
   parentCommentId  String?
   parentComment    Comment? @relation("CommentToComment", fields: [parentCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   childComments    Comment[] @relation("CommentToComment")

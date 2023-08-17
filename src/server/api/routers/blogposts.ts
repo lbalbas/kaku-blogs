@@ -94,4 +94,43 @@ export const blogPostsRouter = createTRPCRouter({
         },
       });
     }),
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const post = await ctx.prisma.blogPost.findFirst({
+        where: {
+          id: input.id,
+          userId: ctx.session.user.id,
+        },
+      });
+
+      if (!post) throw new Error("This post doesn't exist or is not yours.");
+
+      await ctx.prisma.blogPost.delete({
+        where: { id: input.id },
+      });
+
+      return { status: 200, msg: "Success" };
+    }),
+  edit: protectedProcedure
+    .input(z.object({ id: z.string(), content: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const post = await ctx.prisma.blogPost.findFirst({
+        where: {
+          id: input.id,
+          userId: ctx.session.user.id,
+        },
+      });
+
+      if (!post) throw new Error("This post doesn't exist or is not yours.");
+
+      await ctx.prisma.blogPost.update({
+        where: { id: input.id },
+        data: {
+          content: input.content,
+        },
+      });
+
+      return { status: 200, msg: "Success" };
+    }),
 });

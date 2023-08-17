@@ -11,7 +11,9 @@ const SearchBar = () => {
 
   const redirectToSearch = () => {
     setLoading(true);
-    void router.push(`/search/${search}`).then(()=>{setLoading(false)});
+    void router.push(`/search/${search}`).then(() => {
+      setLoading(false);
+    });
   };
   return (
     <div className="max-w-96 relative flex w-3/6 items-center text-uviolet">

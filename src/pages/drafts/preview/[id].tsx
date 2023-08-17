@@ -15,6 +15,7 @@ const DraftPreview: NextPage<{ id: string }> = ({ id }) => {
       <Head>
         <title>{title}</title>
       </Head>
+      <Link href={`/drafts/${id}`}>Go back to editor</Link>
       <h1 className="w-full text-3xl font-bold">{title}</h1>
       <div className="my-6 flex w-fit items-center gap-4">
         <img
@@ -23,7 +24,10 @@ const DraftPreview: NextPage<{ id: string }> = ({ id }) => {
           alt="Author's profile picture"
         />
         <div className="flex flex-col">
-          <Link className="text-slate-600 font-bold" href={`/user/${data.user.id}`}>
+          <Link
+            className="font-bold text-slate-600"
+            href={`/user/${data.user.id}`}
+          >
             {data.user.name}
           </Link>
           <span className="text-sm text-slate-500">5 minutes ago</span>

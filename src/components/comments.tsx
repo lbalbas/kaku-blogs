@@ -110,7 +110,9 @@ const Comments = (props: { post: string }) => {
                   src={comment.user.image!}
                   alt="Profile picture"
                 />
-                <span className="text-sm font-bold text-slate-700">{comment.user.name}</span>
+                <span className="text-sm font-bold text-slate-700">
+                  {comment.user.name}
+                </span>
               </Link>
               <span className="text-xs italic text-slate-500"></span>
             </div>
@@ -130,28 +132,40 @@ const Comments = (props: { post: string }) => {
             </div>
           </div>
           {replyTo === comment.id && (
-            <div className="w-full pl-4 py-2 flex flex-col gap-2">
+            <div className="flex w-full flex-col gap-2 py-2 pl-4">
               <textarea
                 className="rounded-md border-2 border-slate-200 p-2"
                 placeholder="Write your reply here."
                 value={reply}
                 onChange={(e) => setReply(e.target.value)}
               />
-              <div className="flex flex-row gap-4 justify-end">
-              <button className="hover:text-red-500 hover:underline" onClick={() => setReplyTo(null)}>Cancel</button>
-              <button
-                disabled={isReplying}
-                className="flex justify-center items-center self-end rounded-3xl bg-uviolet w-32 gap-1 py-2 text-white"
-                onClick={() =>
-                  replyToComment({
-                    content: reply,
-                    post,
-                    parentCommentId: comment.id,
-                  })
-                }
-              >
-                {isReplying ? <LoadingSpinner size={24} /> : (<><FontAwesomeIcon icon={faReply} /> Reply</>) }
-              </button>              </div>
+              <div className="flex flex-row justify-end gap-4">
+                <button
+                  className="hover:text-red-500 hover:underline"
+                  onClick={() => setReplyTo(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  disabled={isReplying}
+                  className="flex w-32 items-center justify-center gap-1 self-end rounded-3xl bg-uviolet py-2 text-white"
+                  onClick={() =>
+                    replyToComment({
+                      content: reply,
+                      post,
+                      parentCommentId: comment.id,
+                    })
+                  }
+                >
+                  {isReplying ? (
+                    <LoadingSpinner size={24} />
+                  ) : (
+                    <>
+                      <FontAwesomeIcon icon={faReply} /> Reply
+                    </>
+                  )}
+                </button>{" "}
+              </div>
             </div>
           )}
           {comment.childComments && comment.childComments.length > 0 ? (
@@ -161,7 +175,7 @@ const Comments = (props: { post: string }) => {
               </div>
             ) : (
               <button
-                className="pl-6 p-2 w-full text-left text-sm text-blue-500 hover:underline"
+                className="w-full p-2 pl-6 text-left text-sm text-blue-500 hover:underline"
                 onClick={() =>
                   setExpandedComments([
                     ...expandedComments,
@@ -192,7 +206,7 @@ const Comments = (props: { post: string }) => {
 
   return (
     <div className="flex w-full flex-col">
-      <h3 className="pt-4 pb-2 text-xl font-bold text-slate-600">Comments</h3>
+      <h3 className="pb-2 pt-4 text-xl font-bold text-slate-600">Comments</h3>
       {sessionData && (
         <div className="flex flex-col gap-2">
           <textarea
@@ -202,17 +216,23 @@ const Comments = (props: { post: string }) => {
             onChange={(e) => setComment(e.target.value)}
           />
           <button
-            className="flex justify-center items-center self-end rounded-3xl bg-emerald-500 w-36 px-4 gap-1 py-2 text-white"
+            className="flex w-36 items-center justify-center gap-1 self-end rounded-3xl bg-emerald-500 px-4 py-2 text-white"
             disabled={isPosting}
             onClick={() => commentOnPost({ content: comment, post })}
           >
-            {isPosting ? <LoadingSpinner size={24} /> : (<><FontAwesomeIcon icon={faComment} /> Comment</>)}
+            {isPosting ? (
+              <LoadingSpinner size={24} />
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faComment} /> Comment
+              </>
+            )}
           </button>
         </div>
       )}
       <div className="flex flex-col gap-3">
         {data.length == 0 ? (
-          <p className="text-center pt-8">No comments yet, be the first one!</p>
+          <p className="pt-8 text-center">No comments yet, be the first one!</p>
         ) : (
           renderComments(data, 0)
         )}
