@@ -1,10 +1,8 @@
 import Editor from "~/components/editor";
 import { api } from "~/utils/api";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import LoadingBlock from "~/components/loading";
 import { LoadingSpinner } from "~/components/loading";
-import { TRPCError } from "@trpc/server";
 import { useState } from "react";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import type { GetStaticProps, NextPage } from "next";
