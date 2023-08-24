@@ -11,7 +11,16 @@ dayjs.extend(relativeTime);
 const Search: NextPage<{ query: string }> = ({ query }) => {
   const { data } = api.blogs.search.useQuery({ query });
 
-  if (!data || data.length == 0) return <div>No matching results :(</div>;
+  if (!data || data.length == 0)
+    return (
+    <div className="mx-auto flex w-11/12 flex-col gap-3 py-10 md:w-10/12">
+      <Head>
+        <title>{`Searching for "${query}"`}</title>
+      </Head>
+      <h1 className="w-full text-3xl font-bold">{`Searching for "${query}"`}</h1>
+      <p className="pt-8">No matching results found</p>
+    </div>);
+
   return (
     <div className="mx-auto flex w-11/12 flex-col gap-3 py-10 md:w-10/12">
       <Head>

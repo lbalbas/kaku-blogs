@@ -48,7 +48,7 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
             className="h-24 w-24 rounded-full"
             src={user.image ? user.image : ""}
           />
-          <h1 className="text-2xl font-bold">{user.name}</h1>
+          <h1 className="text-2xl font-bold text-center">{user.name}</h1>
         </div>
         <div className="flex flex-grow flex-col gap-3">
           <h2 className="text-2xl">Posts published</h2>
@@ -56,7 +56,7 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
             return (
               <div
                 key={post.id}
-                className="flex items-center gap-8 border-l-4 border-uviolet p-3 pl-4"
+                className="group flex items-center gap-8 border-l-4 border-uviolet p-3 pl-4"
               >
                 <Link
                   className="flex flex-col justify-center text-lg"
@@ -68,8 +68,8 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
                   )}`}</span>
                 </Link>
                 {sessionData && sessionData.user.id === user.id && (
-                  <div className="flex flex-col">
-                    <Link href={`/posts/edit/${post.id}`}>
+                  <div className="group-hover:opacity-100 opacity-0 flex flex-col">
+                    <Link href={`/post/edit/${post.id}`}>
                       <FontAwesomeIcon size="xs" icon={faPenToSquare} />
                     </Link>
                     <button
