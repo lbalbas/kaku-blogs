@@ -117,7 +117,7 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
           </button>
           <button
             disabled={isSaving || isPosting || isDeleting}
-            className="flex items-center justify-center rounded-3xl bg-uviolet px-4 py-2 text-white"
+            className="flex items-center justify-center rounded-3xl bg-cyan-700 px-4 py-2 text-white hover:bg-cyan-800"
             onClick={() => {
               publishDraft({ draftId: id, title: title, content: value });
             }}
@@ -126,8 +126,8 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
           </button>
         </div>
         <div className="flex items-center justify-between">
-          <div className="flex flex-grow flex-col">
-            <span className="font-bold">Title</span>
+          <div className="flex flex-grow flex-col pb-4 font-display">
+            <span className="text-xl font-bold">Title</span>
             <input
               className="rounded-lg border-2 border-slate-200 px-2 py-1"
               value={title}

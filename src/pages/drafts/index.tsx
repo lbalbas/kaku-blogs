@@ -29,7 +29,7 @@ const Drafts = () => {
   if (isLoading) return <LoadingBlock size={32} />;
 
   return (
-    <div className="mx-auto flex w-10/12 max-w-[1440px] flex-col gap-6 py-10">
+    <div className="mx-auto flex w-10/12 max-w-[1440px] flex-col gap-6 py-10 font-display">
       <Head>
         <title>Drafts | Kaku Blogs</title>
       </Head>
@@ -54,7 +54,7 @@ const Drafts = () => {
       <button
         disabled={isPosting}
         onClick={() => mutate()}
-        className="flex h-fit w-32 items-center justify-center gap-1 self-end rounded-3xl bg-uviolet py-2 text-white"
+        className="flex h-fit w-32 items-center justify-center gap-1 self-end rounded-3xl bg-cyan-700 py-2 text-white hover:bg-cyan-800"
       >
         {isPosting ? (
           <LoadingSpinner size={24} />

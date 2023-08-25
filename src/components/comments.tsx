@@ -99,7 +99,7 @@ const Comments = (props: { post: string }) => {
     return comments.map((comment) => {
       return (
         <div key={comment.id} className="flex w-full flex-col">
-          <div className="flex flex-col border-l-4 border-hgreen pl-4">
+          <div className="flex flex-col border-l-4 border-red-500 pl-4">
             <div className="flex items-center gap-4">
               <Link
                 href={`/user/${comment.user.id}`}
@@ -110,7 +110,7 @@ const Comments = (props: { post: string }) => {
                   src={comment.user.image!}
                   alt="Profile picture"
                 />
-                <span className="text-sm font-bold text-slate-700">
+                <span className="font-display text-sm font-bold text-slate-700">
                   {comment.user.name}
                 </span>
               </Link>
@@ -148,7 +148,7 @@ const Comments = (props: { post: string }) => {
                 </button>
                 <button
                   disabled={isReplying}
-                  className="flex w-32 items-center justify-center gap-1 self-end rounded-3xl bg-uviolet py-2 text-white"
+                  className="flex w-32 items-center justify-center gap-1 self-end rounded-3xl bg-cyan-700 py-2 text-white hover:bg-cyan-800"
                   onClick={() =>
                     replyToComment({
                       content: reply,
@@ -206,7 +206,9 @@ const Comments = (props: { post: string }) => {
 
   return (
     <div className="flex w-full flex-col">
-      <h3 className="pb-2 pt-4 text-xl font-bold text-slate-600">Comments</h3>
+      <h3 className="pb-2 pt-4 font-display text-xl font-bold text-slate-600">
+        Comments
+      </h3>
       {sessionData && (
         <div className="flex flex-col gap-2">
           <textarea
@@ -216,7 +218,7 @@ const Comments = (props: { post: string }) => {
             onChange={(e) => setComment(e.target.value)}
           />
           <button
-            className="flex w-36 items-center justify-center gap-1 self-end rounded-3xl bg-emerald-500 px-4 py-2 text-white"
+            className="flex w-36 items-center justify-center gap-1 self-end rounded-3xl bg-emerald-500 px-4 py-2 text-white hover:bg-emerald-600"
             disabled={isPosting}
             onClick={() => commentOnPost({ content: comment, post })}
           >

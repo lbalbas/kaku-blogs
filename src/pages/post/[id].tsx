@@ -20,7 +20,9 @@ const BlogPost: NextPage<{ id: string }> = ({ id }) => {
       <Head>
         <title>{title}</title>
       </Head>
-      <h1 className="w-full text-3xl font-bold">{title}</h1>
+      <h1 className="w-full font-display text-3xl font-bold text-cyan-950">
+        {title}
+      </h1>
       <div className="my-6 flex w-fit items-center gap-4">
         <img
           className="h-10 w-10 rounded-full"
@@ -39,7 +41,7 @@ const BlogPost: NextPage<{ id: string }> = ({ id }) => {
           )}`}</span>
         </div>
       </div>
-      <div className="border-b-2 border-slate-100 py-4 text-justify leading-relaxed">
+      <div className="border-b-2 border-slate-100 py-4 text-justify leading-relaxed text-cyan-950">
         {parse(content)}
       </div>
       <Comments post={data.id} />

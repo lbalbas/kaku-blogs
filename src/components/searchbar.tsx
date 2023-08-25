@@ -16,14 +16,14 @@ const SearchBar = () => {
     });
   };
   return (
-    <div className="max-w-96 relative flex w-3/6 items-center text-uviolet">
+    <div className="max-w-96 relative flex w-3/6 items-center text-cyan-950 shadow-sm">
       <FontAwesomeIcon
         size="sm"
         className="absolute left-4"
         icon={faMagnifyingGlass}
       />
       <input
-        className="w-full self-center rounded-l-xl border-2 border-r-0 border-slate-200 py-1 pl-10 pr-2"
+        className="w-full self-center rounded-l-xl py-1 pl-10 pr-2"
         type="text"
         value={search}
         onChange={(e) => {
@@ -34,7 +34,7 @@ const SearchBar = () => {
       <button
         onClick={redirectToSearch}
         disabled={isLoading}
-        className="w-16 rounded-r-xl border-2 bg-isabel px-4 py-1"
+        className="w-16 rounded-r-xl bg-cyan-600 px-4 py-1 text-white"
       >
         {isLoading ? (
           <LoadingSpinner size={24} />

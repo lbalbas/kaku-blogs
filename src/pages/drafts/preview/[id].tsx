@@ -11,12 +11,13 @@ const DraftPreview: NextPage<{ id: string }> = ({ id }) => {
 
   const { title, content } = data;
   return (
-    <div className="mx-auto flex w-9/12 flex-col">
+    <div className="mx-auto flex w-10/12 flex-col py-10 md:w-9/12">
       <Head>
         <title>{title}</title>
       </Head>
-      <Link href={`/drafts/${id}`}>Go back to editor</Link>
-      <h1 className="w-full text-3xl font-bold">{title}</h1>
+      <h1 className="w-full font-display text-3xl font-bold text-cyan-950">
+        {title}
+      </h1>
       <div className="my-6 flex w-fit items-center gap-4">
         <img
           className="h-10 w-10 rounded-full"
@@ -33,7 +34,15 @@ const DraftPreview: NextPage<{ id: string }> = ({ id }) => {
           <span className="text-sm text-slate-500">5 minutes ago</span>
         </div>
       </div>
-      <div className="my-4 text-justify leading-relaxed">{parse(content)}</div>
+      <div className="border-b-2 border-slate-100 py-4 text-justify leading-relaxed text-cyan-950">
+        {parse(content)}
+      </div>
+      <Link
+        className="my-2 w-fit rounded-full bg-black p-2 px-3 text-white"
+        href={`/drafts/${id}`}
+      >
+        Go back to editor
+      </Link>
     </div>
   );
 };

@@ -10,7 +10,6 @@ import toast from "react-hot-toast";
 
 const PostEditor: NextPage<{ id: string }> = ({ id }) => {
   const [value, setValue] = useState("");
-  const [title, setTitle] = useState("");
   const router = useRouter();
   const ctx = api.useContext();
 
@@ -21,27 +20,25 @@ const PostEditor: NextPage<{ id: string }> = ({ id }) => {
     {
       onSuccess: (data) => {
         setValue(data!.content);
-        setTitle(data!.title);
       },
     }
   );
 
-  const { mutate: editPost, isLoading: isSaving } =
-    api.blogs.edit.useMutation({
-      onSuccess: () => {
-        toast.success("Saved successfully.");
-        void router.push(`/post/${id}`)
-      },
-      onError: (e) => {
-        const errorMessage = e.data?.zodError?.fieldErrors.content;
-        if (errorMessage && errorMessage[0]) {
-          console.log(errorMessage[0]);
-          toast.error(errorMessage[0]);
-        } else {
-          toast.error("Failed to save! Please try again later.");
-        }
-      },
-    });
+  const { mutate: editPost, isLoading: isSaving } = api.blogs.edit.useMutation({
+    onSuccess: () => {
+      toast.success("Saved successfully.");
+      void router.push(`/post/${id}`);
+    },
+    onError: (e) => {
+      const errorMessage = e.data?.zodError?.fieldErrors.content;
+      if (errorMessage && errorMessage[0]) {
+        console.log(errorMessage[0]);
+        toast.error(errorMessage[0]);
+      } else {
+        toast.error("Failed to save! Please try again later.");
+      }
+    },
+  });
 
   if (isLoading) return <LoadingBlock size={24} />;
 
@@ -51,25 +48,15 @@ const PostEditor: NextPage<{ id: string }> = ({ id }) => {
         <div className="flex items-center justify-end gap-2">
           <button
             disabled={isSaving}
-            className="flex w-20 items-center justify-center  rounded-3xl bg-emerald-400 px-4 py-2 text-white"
+            className="flex w-20 items-center justify-center rounded-3xl bg-emerald-400  px-4 py-2 font-display font-bold text-white hover:bg-emerald-500"
             onClick={() => {
-              editPost({ id, title: title, content: value });
+              editPost({ id, content: value });
             }}
           >
-            {isSaving ? <LoadingSpinner size={24} /> : "Save Changes"}
+            {isSaving ? <LoadingSpinner size={24} /> : "Edit"}
           </button>
         </div>
-        <div className="flex items-center justify-between">
-          <div className="flex flex-grow flex-col">
-            <span className="font-bold">Title</span>
-            <input
-              className="rounded-lg border-2 border-slate-200 px-2 py-1"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              type="text"
-            />
-          </div>
-        </div>
+        <h1 className="pb-4 font-display text-2xl font-bold">{data.title}</h1>
         <Editor value={value} setValue={setValue} />
       </div>
     );

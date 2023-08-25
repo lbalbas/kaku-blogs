@@ -2,14 +2,19 @@ import Link from "next/link";
 import SearchBar from "./searchbar";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenNib, faUser, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPenNib,
+  faUser,
+  faSignOut,
+  faSignIn,
+} from "@fortawesome/free-solid-svg-icons";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 
 const Navbar = () => {
   const { data: sessionData } = useSession();
   return (
-    <nav className="bg-hgreen text-mcream">
+    <nav className="bg-gradient-to-l from-teal-200 to-teal-500 text-white">
       <div className="mx-auto flex w-11/12 max-w-[1440px] items-center justify-between py-4">
         <Link className="font-bold tracking-wide" href="/">
           Home
@@ -24,9 +29,10 @@ const Navbar = () => {
 const SignInButton = () => {
   return (
     <button
-      className="rounded-full bg-emerald-400 px-10 py-3 font-semibold text-white no-underline transition"
+      className="flex items-center gap-2 rounded-full bg-red-300 px-6 py-2 font-display font-semibold text-white no-underline transition hover:bg-red-400"
       onClick={() => void signIn()}
     >
+      <FontAwesomeIcon size="sm" icon={faSignIn} />
       Sign in
     </button>
   );
@@ -40,10 +46,10 @@ const UserMenu = (props: {
   };
 }) => {
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className="relative inline-block text-left font-display">
       <div>
-        <Menu.Button className="inline-flex w-full items-center justify-center gap-x-2 px-3 py-2 text-sm font-semibold text-white">
-          <span>{props.user.name}</span>
+        <Menu.Button className="inline-flex w-full items-center justify-center gap-x-2 px-3 py-2 text-sm font-bold tracking-wide text-cyan-950">
+          <span className="">{props.user.name}</span>
           <img
             alt="Your profile picture"
             className="h-6 w-6 rounded-full"
@@ -97,7 +103,9 @@ const UserMenu = (props: {
               {({ active }) => (
                 <a
                   href="#"
-                  onClick={() => {void signOut()}}
+                  onClick={() => {
+                    void signOut();
+                  }}
                   className={classNames(
                     active ? "bg-gray-100 text-red-500" : "text-gray-700",
                     "block flex items-center gap-2 px-4 py-2 text-sm"

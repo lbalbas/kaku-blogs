@@ -43,12 +43,14 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
         <title>{user.name} | Kaku Blogs</title>
       </Head>
       <div className="flex flex-col gap-12 md:flex-row">
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-2 font-display">
           <img
             className="h-24 w-24 rounded-full"
             src={user.image ? user.image : ""}
           />
-          <h1 className="text-2xl font-bold text-center">{user.name}</h1>
+          <h1 className="text-center font-display text-2xl font-bold">
+            {user.name}
+          </h1>
         </div>
         <div className="flex flex-grow flex-col gap-3">
           <h2 className="text-2xl">Posts published</h2>
@@ -56,10 +58,10 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
             return (
               <div
                 key={post.id}
-                className="group flex items-center gap-8 border-l-4 border-uviolet p-3 pl-4"
+                className="group flex items-center gap-8 border-l-4 border-violet-900 p-3 pl-4"
               >
                 <Link
-                  className="flex flex-col justify-center text-lg"
+                  className="flex flex-col justify-center font-display text-lg"
                   href={`/post/${post.id}`}
                 >
                   {post.title}
@@ -68,7 +70,7 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
                   )}`}</span>
                 </Link>
                 {sessionData && sessionData.user.id === user.id && (
-                  <div className="group-hover:opacity-100 opacity-0 flex flex-col">
+                  <div className="flex flex-col opacity-0 group-hover:opacity-100">
                     <Link href={`/post/edit/${post.id}`}>
                       <FontAwesomeIcon size="xs" icon={faPenToSquare} />
                     </Link>
