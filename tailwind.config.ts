@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-      'display': 'Quicksand, sans-serif',
-      'body': 'Source Sans 3, sans-serif',
+      'display': 'var(--font-quicksand)',
+      'body': 'var(--font-sourcesans3)',
     }
     },
   },

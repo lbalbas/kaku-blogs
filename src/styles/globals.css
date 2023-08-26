@@ -2,18 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+.ql-container {
+  font-family: "Source Sans 3", sans-serif !important;
+}
 .ql-snow .ql-tooltip::before {
   content: "Image URL:" !important;
-}
-body {
-  font-family: "Source Sans 3", sans-serif;
 }
 ol {
   list-style-type: decimal;
   list-style-position: inside;
   padding-left: 2.5rem;
 }
-
 ul {
   list-style-type: circle;
   list-style-position: inside;

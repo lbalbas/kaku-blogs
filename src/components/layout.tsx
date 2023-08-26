@@ -1,8 +1,20 @@
 import type { ReactNode } from "react";
 import Navbar from "./navbar";
+import { Quicksand, Source_Sans_3 } from 'next/font/google'
+
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  variable: '--font-quicksand',
+})
+
+const sourceSans3 = Source_Sans_3({
+  subsets: ['latin'],
+  variable: '--font-sourcesans3',
+})
+
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col justify-between">
+    <div className={`${quicksand.variable} ${sourceSans3.variable} font-body flex min-h-screen flex-col justify-between`}>
       <Navbar />
       <main className="mx-auto flex w-full max-w-[1440px] flex-grow">
         {children}
