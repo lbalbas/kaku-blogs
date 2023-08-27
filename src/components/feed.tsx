@@ -7,7 +7,7 @@ const Feed = () => {
 
   if (isLoading) return <LoadingBlock size={32} />;
 
-  if (!data) return <div>No posts to show :(</div>;
+  if (!data) return <div>Error while fetching, please try again.</div>;
 
   return (
     <div className="grid w-11/12 grid-cols-2 gap-5 rounded-md bg-white p-6 text-cyan-950 shadow-2xl lg:grid-cols-3">

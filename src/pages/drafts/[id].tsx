@@ -79,7 +79,8 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
 
   if (isLoading) return <LoadingBlock size={24} />;
 
-  if (data)
+      if (!data) return <div className="font-display h-full w-full flex items-center justify-center text-3xl font-bold">404 - Not Found</div>;
+
     return (
       <div className="mx-auto w-10/12 py-10">
         <div className="flex items-center justify-end gap-2">
@@ -144,8 +145,6 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
         </p>
       </div>
     );
-
-  return <div>404</div>;
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {

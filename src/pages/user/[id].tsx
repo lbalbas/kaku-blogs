@@ -17,7 +17,7 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
   const { data: sessionData } = useSession();
   const ctx = api.useContext();
 
-  if (!data) return <div>404</div>;
+  if (!data) return <div className="font-display h-full w-full flex items-center justify-center text-3xl font-bold">404 - Not Found</div>;
 
   const { user, posts } = data;
 
