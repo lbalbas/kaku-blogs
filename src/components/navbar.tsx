@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
+import Image from 'next/image';
 
 const Navbar = () => {
   const { data: sessionData } = useSession();
@@ -17,7 +18,7 @@ const Navbar = () => {
     <nav className="bg-gradient-to-l from-teal-200 to-teal-500 text-white">
       <div className="mx-auto flex w-11/12 max-w-[1440px] items-center justify-between py-4">
         <Link className="font-bold tracking-wide" href="/">
-          Home
+          <Image src="/fulllogo.svg" alt="Kaku Blogs" width={125} height={45}/>
         </Link>
         <SearchBar />
         {sessionData ? <UserMenu user={sessionData.user} /> : <SignInButton />}
@@ -49,10 +50,12 @@ const UserMenu = (props: {
     <Menu as="div" className="relative inline-block text-left font-display">
       <div>
         <Menu.Button className="inline-flex w-full items-center justify-center gap-x-2 px-3 py-2 text-sm font-bold tracking-wide text-cyan-950">
-          <span className="">{props.user.name}</span>
-          <img
+          <span className="hidden md:inline">{props.user.name}</span>
+          <Image
             alt="Your profile picture"
-            className="h-6 w-6 rounded-full"
+            height={28}
+            width={28}
+            className="rounded-full"
             src={props.user.image!}
           />
         </Menu.Button>

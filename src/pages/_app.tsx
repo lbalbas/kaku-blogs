@@ -35,7 +35,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             name="description"
             content="Blogging platform made by Luis Balbás using the T3 stack"
           />
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/logo.svg" />
         </Head>
         <Component {...pageProps} />
       </Layout>
