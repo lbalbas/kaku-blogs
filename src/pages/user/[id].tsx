@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { api } from "~/utils/api";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
+import { useState } from 'react';
 import type { GetStaticProps, NextPage } from "next";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -8,12 +9,13 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrash, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-
+import type { BlogPost } from '@prisma/client'
 dayjs.extend(relativeTime);
 
 const UserPage: NextPage<{ id: string }> = ({ id }) => {
+  const [currentPage, setPage] = useState(0);
   const { data } = api.blogs.getAllByUserId.useQuery({ id });
   const { data: sessionData } = useSession();
   const ctx = api.useContext();
@@ -25,7 +27,7 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
       </div>
     );
 
-  const { user, posts } = data;
+  const { user } = data;
 
   const { mutate: deletePost } = api.blogs.delete.useMutation({
     onSuccess: () => {
@@ -43,11 +45,21 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
     },
   });
 
+  const paginate = (array: BlogPost[], itemsPerPage: number) => {
+    const pages = [];
+    for (let i = 0; i < array.length; i += itemsPerPage) {
+      pages.push(array.slice(i, i + itemsPerPage));
+    }
+    return pages;
+  }
+
+  const posts = paginate(data.posts, 10);
+  
   const iteratePosts = () => {
     if (posts.length === 0)
       return <p>{`This user hasn't published any posts yet.`}</p>;
 
-    return posts.map((post) => {
+    return posts[currentPage]!.map((post) => {
       return (
         <div
           key={post.id}
@@ -81,6 +93,7 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
       );
     });
   };
+
   return (
     <div className="mx-auto flex w-10/12 flex-col py-10 text-cyan-950">
       <Head>
@@ -102,6 +115,15 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
         <div className="flex flex-grow flex-col gap-3">
           <h2 className="text-2xl">Posts published</h2>
           {iteratePosts()}
+          <div className="flex justify-center gap-2 items-center">
+            <button disabled={currentPage <= 0} onClick={()=>{setPage(currentPage - 1)}}>
+                <FontAwesomeIcon icon={faChevronLeft} />
+            </button>
+            <span>Page {`${currentPage + 1} of ${posts.length}`}</span>
+            <button disabled={currentPage + 1 >= posts.length} onClick={()=>{setPage(currentPage + 1)}}>
+                <FontAwesomeIcon icon={faChevronRight} />
+            </button>
+          </div>
         </div>
       </div>
     </div>
