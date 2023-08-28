@@ -1,19 +1,24 @@
-# Create T3 App
+# Kaku Blogs
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Kaku Blogs is a simple Medium-like blogging app made with the [T3 Stack](https://create.t3.gg/) bootstrapped with `create-t3-app`.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+  - Rich text editor for writing posts using Quill.
+  - Fully functional comment system.
+  - Search functionality.
+  - Authentication powered by Auth.js
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Environment Variables
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+Before running this project you will need to set these variables in your .env file.
 
+  `DATABASE_URL`
+  `NEXTAUTH_URL`
+  `NEXTAUTH_SECRET`
+  `GITHUB_CLIENT_ID`
+  `GITHUB_CLIENT_SECRET`
+  
 ## Learn More
 
 To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
