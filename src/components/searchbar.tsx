@@ -16,7 +16,7 @@ const SearchBar = () => {
     });
   };
   return (
-    <div className="max-w-96 relative flex w-3/6 items-center text-cyan-950 shadow-sm">
+    <div className="max-w-96 relative flex w-3/6 flex-grow items-center text-cyan-950 shadow-sm lg:flex-grow-0">
       <FontAwesomeIcon
         size="sm"
         className="absolute left-4"

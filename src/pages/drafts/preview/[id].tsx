@@ -4,22 +4,31 @@ import parse from "html-react-parser";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import type { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
+import Image from "next/image";
 
 const DraftPreview: NextPage<{ id: string }> = ({ id }) => {
-  const { data } = api.drafts.getOneById.useQuery({ id },{
-     onError: (e) => {
-      const errorMessage = e.data?.zodError?.fieldErrors.content;
-      if (errorMessage && errorMessage[0]) {
-        console.log(errorMessage[0]);
-        toast.error(errorMessage[0]);
-      } else {
-        toast.error("Failed to fetch! Please try again later.");
-      }
-    }}
-);
+  const { data } = api.drafts.getOneById.useQuery(
+    { id },
+    {
+      onError: (e) => {
+        const errorMessage = e.data?.zodError?.fieldErrors.content;
+        if (errorMessage && errorMessage[0]) {
+          console.log(errorMessage[0]);
+          toast.error(errorMessage[0]);
+        } else {
+          toast.error("Failed to fetch! Please try again later.");
+        }
+      },
+    }
+  );
 
-  if (!data) return <div className="font-display h-full w-full flex items-center justify-center text-3xl font-bold">404 - Not Found</div>;
+  if (!data)
+    return (
+      <div className="flex h-full w-full items-center justify-center font-display text-3xl font-bold">
+        404 - Not Found
+      </div>
+    );
 
   const { title, content } = data;
   return (
@@ -31,8 +40,10 @@ const DraftPreview: NextPage<{ id: string }> = ({ id }) => {
         {title}
       </h1>
       <div className="my-6 flex w-fit items-center gap-4">
-        <img
-          className="h-10 w-10 rounded-full"
+        <Image
+          width={32}
+          height={32}
+          className="rounded-full"
           src={data.user.image!}
           alt="Author's profile picture"
         />

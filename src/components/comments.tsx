@@ -9,6 +9,7 @@ import { LoadingSpinner } from "./loading";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply, faComment } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
 dayjs.extend(relativeTime);
 
@@ -91,7 +92,7 @@ const Comments = (props: { post: string }) => {
       },
     });
 
-  if (isLoading) return <LoadingBlock size={18} />;
+  if (isLoading) return <LoadingBlock size={24} />;
 
   if (!data) return <div>Something went wrong!</div>;
 
@@ -105,8 +106,10 @@ const Comments = (props: { post: string }) => {
                 href={`/user/${comment.user.id}`}
                 className="flex items-center gap-1"
               >
-                <img
-                  className="h-6 w-6 rounded-full"
+                <Image
+                  height={24}
+                  width={24}
+                  className="rounded-full"
                   src={comment.user.image!}
                   alt="Profile picture"
                 />

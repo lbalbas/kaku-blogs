@@ -11,7 +11,6 @@ import toast from "react-hot-toast";
 const PostEditor: NextPage<{ id: string }> = ({ id }) => {
   const [value, setValue] = useState("");
   const router = useRouter();
-  const ctx = api.useContext();
 
   const { data, isLoading } = api.blogs.getOneById.useQuery(
     {
@@ -44,7 +43,7 @@ const PostEditor: NextPage<{ id: string }> = ({ id }) => {
 
   if (data)
     return (
-      <div className="mx-auto w-10/12 py-10">
+      <div className="mx-auto w-10/12 py-10 text-cyan-950">
         <div className="flex items-center justify-end gap-2">
           <button
             disabled={isSaving}

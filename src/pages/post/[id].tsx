@@ -7,6 +7,7 @@ import Comments from "~/components/comments";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
+import Image from "next/image";
 
 dayjs.extend(relativeTime);
 
@@ -24,8 +25,10 @@ const BlogPost: NextPage<{ id: string }> = ({ id }) => {
         {title}
       </h1>
       <div className="my-6 flex w-fit items-center gap-4">
-        <img
-          className="h-10 w-10 rounded-full"
+        <Image
+          width={36}
+          height={36}
+          className="rounded-full"
           src={data.user.image!}
           alt="Author's profile picture"
         />

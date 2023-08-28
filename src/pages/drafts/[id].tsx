@@ -79,72 +79,77 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
 
   if (isLoading) return <LoadingBlock size={24} />;
 
-      if (!data) return <div className="font-display h-full w-full flex items-center justify-center text-3xl font-bold">404 - Not Found</div>;
-
+  if (!data)
     return (
-      <div className="mx-auto w-10/12 py-10">
-        <div className="flex items-center justify-end gap-2">
-          <button
-            disabled={isSaving || isPosting || isDeleting}
-            className="mr-4 flex w-20 items-center justify-center  rounded-3xl px-4 py-2 hover:bg-red-400 hover:text-white"
-            onClick={() => {
-              if (confirm("Are you sure you want to delete this draft?"))
-                deleteDraft({ id });
-            }}
-          >
-            {isDeleting ? <LoadingSpinner size={24} /> : "Delete"}
-          </button>
-          <button
-            className="hover:underline"
-            disabled={isSaving || isPosting || isDeleting}
-            onClick={() => {
-              if (value !== data.content || title !== data.title) {
-                toast.error("Please save your changes before previewing.");
-                return;
-              }
-              void router.push(`/drafts/preview/${id}`);
-            }}
-          >
-            Preview
-          </button>
-          <button
-            disabled={isSaving || isPosting || isDeleting}
-            className="flex w-20 items-center justify-center  rounded-3xl bg-emerald-400 px-4 py-2 text-white"
-            onClick={() => {
-              saveDraft({ id, title: title, content: value });
-            }}
-          >
-            {isSaving ? <LoadingSpinner size={24} /> : "Save"}
-          </button>
-          <button
-            disabled={isSaving || isPosting || isDeleting}
-            className="flex items-center justify-center rounded-3xl bg-cyan-700 px-4 py-2 text-white hover:bg-cyan-800"
-            onClick={() => {
-              publishDraft({ draftId: id, title: title, content: value });
-            }}
-          >
-            {isPosting ? <LoadingSpinner size={24} /> : "Publish"}
-          </button>
-        </div>
-        <div className="flex items-center justify-between">
-          <div className="flex flex-grow flex-col pb-4 font-display">
-            <span className="text-xl font-bold">Title</span>
-            <input
-              className="rounded-lg border-2 border-slate-200 px-2 py-1"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              type="text"
-            />
-          </div>
-        </div>
-        <Editor value={value} setValue={setValue} />
-        <p className="mx-auto text-center text-xs text-slate-400 md:w-10/12">
-          {
-            "You will need to save all changes made before previewing. Please always preview your post before publishing, as the result doesn't always match what you see in the editor"
-          }
-        </p>
+      <div className="flex h-full w-full items-center justify-center font-display text-3xl font-bold">
+        404 - Not Found
       </div>
     );
+
+  return (
+    <div className="mx-auto w-10/12 py-10 text-cyan-950">
+      <div className="flex items-center justify-end gap-2">
+        <button
+          disabled={isSaving || isPosting || isDeleting}
+          className="mr-4 flex w-20 items-center justify-center  rounded-3xl px-4 py-2 hover:bg-red-400 hover:text-white"
+          onClick={() => {
+            if (confirm("Are you sure you want to delete this draft?"))
+              deleteDraft({ id });
+          }}
+        >
+          {isDeleting ? <LoadingSpinner size={24} /> : "Delete"}
+        </button>
+        <button
+          className="hover:underline"
+          disabled={isSaving || isPosting || isDeleting}
+          onClick={() => {
+            if (value !== data.content || title !== data.title) {
+              toast.error("Please save your changes before previewing.");
+              return;
+            }
+            void router.push(`/drafts/preview/${id}`);
+          }}
+        >
+          Preview
+        </button>
+        <button
+          disabled={isSaving || isPosting || isDeleting}
+          className="flex w-20 items-center justify-center  rounded-3xl bg-emerald-400 px-4 py-2 text-white"
+          onClick={() => {
+            saveDraft({ id, title: title, content: value });
+          }}
+        >
+          {isSaving ? <LoadingSpinner size={24} /> : "Save"}
+        </button>
+        <button
+          disabled={isSaving || isPosting || isDeleting}
+          className="flex items-center justify-center rounded-3xl bg-cyan-700 px-4 py-2 text-white hover:bg-cyan-800"
+          onClick={() => {
+            publishDraft({ draftId: id, title: title, content: value });
+          }}
+        >
+          {isPosting ? <LoadingSpinner size={24} /> : "Publish"}
+        </button>
+      </div>
+      <div className="flex items-center justify-between">
+        <div className="flex flex-grow flex-col pb-4 font-display">
+          <span className="text-xl font-bold">Title</span>
+          <input
+            className="rounded-lg border-2 border-slate-200 px-2 py-1"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            type="text"
+          />
+        </div>
+      </div>
+      <Editor value={value} setValue={setValue} />
+      <p className="mx-auto text-center text-xs text-slate-400 md:w-10/12">
+        {
+          "You will need to save all changes made before previewing. Please always preview your post before publishing, as the result doesn't always match what you see in the editor"
+        }
+      </p>
+    </div>
+  );
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {

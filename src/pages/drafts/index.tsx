@@ -19,8 +19,8 @@ const Drafts = () => {
   const { data: drafts, isLoading } = api.drafts.getAllByCurrentUser.useQuery(
     undefined,
     {
-      onError: (e) => {
-        toast.error("Please Login and try again.");
+      onError: () => {
+        toast.error("Please login and try again.");
         void router.push("/");
       },
     }
@@ -33,7 +33,7 @@ const Drafts = () => {
       <Head>
         <title>Drafts | Kaku Blogs</title>
       </Head>
-      <h1 className="text-2xl font-bold">Your Drafts</h1>
+      <h1 className="text-2xl font-bold text-cyan-950">Your Drafts</h1>
       <div className="flex flex-wrap items-center justify-center gap-4">
         {!drafts || drafts.length == 0 ? (
           <div className="py-4">No Drafts yet!</div>

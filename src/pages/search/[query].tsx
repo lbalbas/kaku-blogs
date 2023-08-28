@@ -5,6 +5,7 @@ import type { GetStaticProps, NextPage } from "next";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
+import Image from "next/image";
 
 dayjs.extend(relativeTime);
 
@@ -35,9 +36,14 @@ const Search: NextPage<{ query: string }> = ({ query }) => {
               className="flex flex-col justify-center border-l-4 border-red-500 p-3 pl-4 text-cyan-950"
               key={post.id}
             >
-              <Link href={`/user/${post.user.id}`} className="flex gap-2">
-                <img
-                  className="h-6 w-6 rounded-full"
+              <Link
+                href={`/user/${post.user.id}`}
+                className="flex w-fit items-center gap-2"
+              >
+                <Image
+                  height={24}
+                  width={24}
+                  className="rounded-full"
                   src={post.user.image!}
                   alt={`Author's profile picture`}
                 />
