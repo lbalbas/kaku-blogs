@@ -1,7 +1,7 @@
 datasource db {
-  provider     = "mysql"
+  provider     = "postgres"
   url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  relationMode = "foreignKeys"
 }
 
 generator client {
@@ -66,8 +66,8 @@ model BlogPost {
   user     User      @relation(fields: [userId], references: [id])
   comments Comment[]
 
-  @@fulltext([title])
-  @@fulltext([content, title])
+  @@index([title])
+  @@index([content, title])
 }
 
 model Comment {
@@ -76,9 +76,9 @@ model Comment {
   userId           String
   user             User     @relation(fields: [userId], references: [id])
   blogPostId       String
-  blogPost         BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  blogPost         BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   parentCommentId  String?
-  parentComment    Comment? @relation("CommentToComment", fields: [parentCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  parentComment    Comment? @relation("CommentToComment", fields: [parentCommentId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   childComments    Comment[] @relation("CommentToComment")
   createdAt        DateTime @default(now())
   
