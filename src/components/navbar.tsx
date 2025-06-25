@@ -35,12 +35,19 @@ const Navbar = () => {
           />
         </Link>
         <SearchBar />
-        {sessionData ? <UserMenu user={sessionData.user} /> : <SignInButton />}
+        {sessionData ? (<div className="flex items-center gap-12 justify-between md:w-40"><DraftButton /><UserMenu user={sessionData.user} /></div>) : <SignInButton />}
       </div>
     </nav>
   );
 };
 
+const DraftButton = () => {
+  return (
+    <Link href="/drafts">
+      <button className="flex h-fit font-bold items-center justify-center gap-1 self-end py-2 text-cyan-800"><FontAwesomeIcon size="sm" icon={faPenNib} /> Drafts</button>
+    </Link>
+  )
+}
 const SignInButton = () => {
   return (
     <button
@@ -52,7 +59,6 @@ const SignInButton = () => {
     </button>
   );
 };
-
 const UserMenu = (props: {
   user: { id: string } & {
     name?: string | null | undefined;
@@ -63,12 +69,12 @@ const UserMenu = (props: {
   return (
     <Menu as="div" className="relative inline-block text-left font-display">
       <div>
-        <Menu.Button className="inline-flex w-full items-center justify-center gap-x-2 px-3 py-2 text-sm font-bold tracking-wide text-cyan-950">
+        <Menu.Button className="inline-flex w-full items-center justify-center gap-x-2 px-3 py-2 font-bold tracking-wide text-cyan-950">
           <span className="hidden md:inline">{props.user.name}</span>
           <Image
             alt="Your profile picture"
-            height={28}
-            width={28}
+            height={32}
+            width={32}
             className="rounded-full"
             src={props.user.image!}
           />
