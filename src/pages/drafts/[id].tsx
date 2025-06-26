@@ -100,7 +100,7 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
           {isDeleting ? <LoadingSpinner size={24} /> : "Delete"}
         </button>
         <button
-          className="hover:underline"
+          className="hover:underline w-20"
           disabled={isSaving || isPosting || isDeleting}
           onClick={() => {
             if (value !== data.content || title !== data.title) {
