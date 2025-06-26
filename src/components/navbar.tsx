@@ -15,7 +15,7 @@ import Image from "next/image";
 const Navbar = () => {
   const { data: sessionData } = useSession();
   return (
-    <nav className="bg-gradient-to-l from-teal-200 to-teal-500 text-white">
+    <nav className="bg-gradient-to-l from-teal-300 to-teal-500 text-white">
       <div className="mx-auto flex w-11/12 max-w-[1440px] items-center gap-4 py-4 md:justify-between md:gap-0">
         <Link className="font-bold tracking-wide" href="/">
           <Image

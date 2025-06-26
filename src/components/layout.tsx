@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <main className="mx-auto flex w-full max-w-[1440px] flex-grow">
         {children}
       </main>
-      <footer className="bg-gradient-to-l from-teal-200 to-teal-500 py-4 text-center text-teal-900">
+      <footer className="bg-gradient-to-l from-teal-300 to-teal-500 py-4 text-center text-teal-900">
         Developed by{" "}
         <a className="underline" href="https://github.com/lbalbas">
           Luis Balbás

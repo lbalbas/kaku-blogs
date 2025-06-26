@@ -23,7 +23,7 @@ const SearchBar = () => {
         icon={faMagnifyingGlass}
       />
       <input
-        className="w-full self-center rounded-l-xl py-1 pl-10 pr-2"
+        className="w-full self-center rounded-l-xl py-2 pl-10 pr-2"
         type="text"
         value={search}
         onChange={(e) => {
@@ -34,7 +34,7 @@ const SearchBar = () => {
       <button
         onClick={redirectToSearch}
         disabled={isLoading}
-        className="w-16 rounded-r-xl bg-cyan-600 px-4 py-1 text-white"
+        className="w-16 rounded-r-xl bg-cyan-600 px-4 py-2 text-white"
       >
         {isLoading ? (
           <LoadingSpinner size={24} />

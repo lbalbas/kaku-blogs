@@ -7,7 +7,7 @@ export default function Home() {
         html {
           --tw-gradient-to: #14b8a6 var(--tw-gradient-to-position);
           --tw-gradient-to-position: ;
-          --tw-gradient-from: #99f6e4 var(--tw-gradient-from-position);
+          --tw-gradient-from: #5eead4 var(--tw-gradient-from-position);
           --tw-gradient-from-position: ;
           --tw-gradient-to: #14b8a6 var(--tw-gradient-from-position);
           --tw-gradient-to-position: ;
