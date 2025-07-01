@@ -8,7 +8,7 @@ import Link from "next/link";
 import { LoadingSpinner } from "./loading";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faReply, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faReply, faComment, faUser } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 
 dayjs.extend(relativeTime);
@@ -106,13 +106,15 @@ const Comments = (props: { post: string }) => {
                 href={`/user/${comment.user.id}`}
                 className="flex items-center gap-1"
               >
-                <Image
-                  height={24}
-                  width={24}
-                  className="rounded-full"
-                  src={comment.user.image!}
-                  alt="Profile picture"
-                />
+                {
+                  comment.user.image ? <Image
+                    height={24}
+                    width={24}
+                    className="rounded-full"
+                    src={comment.user.image}
+                    alt="Profile picture"
+                  /> : <FontAwesomeIcon size="sm" icon={faUser} />
+                }
                 <span className="font-display text-sm font-bold text-slate-700">
                   {comment.user.name}
                 </span>
