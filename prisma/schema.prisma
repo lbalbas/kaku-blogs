@@ -56,6 +56,7 @@ model User {
   comments  Comment[]
   blogPosts BlogPost[]
   drafts    Draft[]
+  isGuest   Boolean   @default(false)
 }
 
 model BlogPost {
