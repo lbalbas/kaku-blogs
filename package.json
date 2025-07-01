@@ -33,6 +33,7 @@
     "react-hot-toast": "^2.4.1",
     "react-quill": "^2.0.0",
     "superjson": "1.12.2",
+    "uuid": "^11.1.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
