@@ -71,13 +71,13 @@ const UserMenu = (props: {
       <div>
         <Menu.Button className="inline-flex w-full items-center justify-center gap-x-2 px-3 py-2 font-bold tracking-wide text-cyan-950">
           <span className="hidden md:inline">{props.user.name}</span>
-          <Image
+          {props.user.image ? <Image
             alt="Your profile picture"
             height={32}
             width={32}
             className="rounded-full"
-            src={props.user.image!}
-          />
+            src={props.user.image}
+          /> : <FontAwesomeIcon size="sm" icon={faUser} />}
         </Menu.Button>
       </div>
 
