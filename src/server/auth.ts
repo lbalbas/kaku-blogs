@@ -61,7 +61,7 @@ export const authOptions: NextAuthOptions = {
     jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.isGuest = (user as any).isGuest || false;
+        token.isGuest = user.isGuest || false;
       }
       return token;
     },
