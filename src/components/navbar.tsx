@@ -35,7 +35,7 @@ const Navbar = () => {
           />
         </Link>
         <SearchBar />
-        {sessionData ? (<div className="flex items-center gap-12 justify-between md:w-40"><DraftButton /><UserMenu user={sessionData.user} /></div>) : <SignInButton />}
+        {sessionData ? (<div className="flex items-center gap-6 justify-between md:w-52"><DraftButton /><UserMenu user={sessionData.user} /></div>) : <SignInButton />}
       </div>
     </nav>
   );
@@ -77,7 +77,7 @@ const UserMenu = (props: {
             width={32}
             className="rounded-full"
             src={props.user.image}
-          /> : <FontAwesomeIcon size="sm" icon={faUser} />}
+          /> : <FontAwesomeIcon size="lg" icon={faUser} />}
         </Menu.Button>
       </div>
 
@@ -97,7 +97,7 @@ const UserMenu = (props: {
                 <Link
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block flex items-center gap-2 px-4 py-2 text-sm"
+                    "flex items-center gap-2 px-4 py-2 text-sm"
                   )}
                   href={`/user/${props.user.id}`}
                 >
@@ -111,7 +111,7 @@ const UserMenu = (props: {
                 <Link
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block flex items-center gap-2 px-4 py-2 text-sm"
+                    "flex items-center gap-2 px-4 py-2 text-sm"
                   )}
                   href="/drafts"
                 >
@@ -131,7 +131,7 @@ const UserMenu = (props: {
                   }}
                   className={classNames(
                     active ? "bg-gray-100 text-red-500" : "text-gray-700",
-                    "block flex items-center gap-2 px-4 py-2 text-sm"
+                    "flex items-center gap-2 px-4 py-2 text-sm"
                   )}
                 >
                   <FontAwesomeIcon size="sm" icon={faSignOut} />

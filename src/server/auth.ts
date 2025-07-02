@@ -40,12 +40,13 @@ export const authOptions: NextAuthOptions = {
       type: "credentials",
       credentials: {},
       async authorize() {
-        const guestUserId = `guest_${uuidv4()}`;
+        const uuid = uuidv4();
+        const guestUserId = `guest_${uuid}`;
         const guestUser = await prisma.user.upsert({
           where: { id: guestUserId },
           create: {
             id: guestUserId,
-            name: "Guest",
+            name: `Guest ${uuid.split("-")[0]}`,
             email: null,
             isGuest: true,
           },
