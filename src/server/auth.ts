@@ -42,11 +42,12 @@ export const authOptions: NextAuthOptions = {
       async authorize() {
         const uuid = uuidv4();
         const guestUserId = `guest_${uuid}`;
+        const guestName = "Guest" + uuid.split("-")[0];
         const guestUser = await prisma.user.upsert({
           where: { id: guestUserId },
           create: {
             id: guestUserId,
-            name: `Guest ${uuid.split("-")[0]}`,
+            name: guestName,
             email: null,
             isGuest: true,
           },
@@ -57,14 +58,14 @@ export const authOptions: NextAuthOptions = {
     },
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.isGuest = (user as any).isGuest || false;
       }
       return token;
     },
-    async session({ session, token }) {
+    session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
         session.user.isGuest = token.isGuest as boolean;
