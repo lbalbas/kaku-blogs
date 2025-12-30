@@ -15,8 +15,22 @@ const SearchBar = () => {
       setLoading(false);
     });
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      redirectToSearch();
+    } else if (e.key === "Escape") {
+      if (search.length > 0) {
+        setSearch("");
+      }
+      // } else {
+      //   void router.push("/");
+      // }
+    }
+  };
+
   return (
-    <div className="max-w-96 relative flex w-3/6 flex-grow items-center text-cyan-950 shadow-sm lg:flex-grow-0">
+    <div className="relative flex w-3/6 max-w-96 flex-grow items-center text-cyan-950 shadow-sm lg:flex-grow-0">
       <FontAwesomeIcon
         size="sm"
         className="absolute left-4"
@@ -26,6 +40,7 @@ const SearchBar = () => {
         className="w-full self-center rounded-l-xl py-2 pl-10 pr-2"
         type="text"
         value={search}
+        onKeyDown={handleKeyDown}
         onChange={(e) => {
           setSearch(e.target.value);
         }}
