@@ -3,10 +3,46 @@ import { api } from "~/utils/api";
 import { useRouter } from "next/router";
 import LoadingBlock from "~/components/loading";
 import { LoadingSpinner } from "~/components/loading";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import type { GetStaticProps, NextPage } from "next";
 import toast from "react-hot-toast";
+
+interface autoSaveProps {
+  content: string;
+  title: string;
+}
+
+export const useDebounce = (
+  value: autoSaveProps,
+  delay: number
+): autoSaveProps => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+  return debouncedValue;
+};
+
+export const useAutoSave = (content: string, title: string) => {
+  const debouncedData = useDebounce({ content, title }, 20000);
+  const mutation = () => {
+    return;
+  }; // TODO: implement auto save
+
+  useEffect(() => {
+    if (debouncedData.content !== content || debouncedData.title !== title) {
+      mutation();
+    }
+  }, [debouncedData, content, title]);
+
+  return {
+    isSaving: false,
+    isError: false,
+    isSuccess: false,
+  };
+};
 
 const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
   const [value, setValue] = useState("");
@@ -100,7 +136,7 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
           {isDeleting ? <LoadingSpinner size={24} /> : "Delete"}
         </button>
         <button
-          className="hover:underline w-20"
+          className="w-20 hover:underline"
           disabled={isSaving || isPosting || isDeleting}
           onClick={() => {
             if (value !== data.content || title !== data.title) {
