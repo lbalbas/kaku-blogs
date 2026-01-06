@@ -83,7 +83,7 @@ model Comment {
   parentComment    Comment? @relation("CommentToComment", fields: [parentCommentId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   childComments    Comment[] @relation("CommentToComment")
   createdAt        DateTime @default(now())
-  
+
   @@index([userId])
   @@index([blogPostId])
   @@index([parentCommentId])
@@ -92,7 +92,10 @@ model Comment {
 model Draft {
   id       String       @id @default(cuid())
   title    String
+  tempTitle String
+  tempContent String @db.VarChar(5000)
   content  String       @db.VarChar(5000)
   userId   String
   user     User      @relation(fields: [userId], references: [id])
+  lastAutoSavedAt DateTime @default(now())
 }
