@@ -8,40 +8,49 @@ import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import type { GetStaticProps, NextPage } from "next";
 import toast from "react-hot-toast";
 
-interface autoSaveProps {
-  content: string;
-  title: string;
-}
+export const useAutoSave = (content: string, title: string, id: string) => {
+  const [previousSavedContent, setPreviousSavedContent] = useState(content);
+  const [previousSavedTitle, setPreviousSavedTitle] = useState(title);
+  const [isAutoSaving, setIsSaving] = useState(false);
 
-export const useDebounce = (
-  value: autoSaveProps,
-  delay: number
-): autoSaveProps => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
+  // Use tRPC mutation for auto-save
+  const { mutate: saveDraft } = api.drafts.save.useMutation({
+    onMutate: () => {
+      setIsSaving(true);
+    },
+    onSuccess: () => {
+      setIsSaving(false);
+      setPreviousSavedContent(content);
+      setPreviousSavedTitle(title);
+      console.log("Auto-saved successfully");
+    },
+    onError: (error) => {
+      setIsSaving(false);
+      console.error("Auto-save failed:", error);
+    },
+  });
+
+  // Debounce effect
   useEffect(() => {
-    const handler = setTimeout(() => setDebouncedValue(value), delay);
-    return () => clearTimeout(handler);
-  }, [value, delay]);
-  return debouncedValue;
-};
+    // Only auto-save if content or title actually changed
+    const hasContentChanged = content !== previousSavedContent;
+    const hasTitleChanged = title !== previousSavedTitle;
 
-export const useAutoSave = (content: string, title: string) => {
-  const debouncedData = useDebounce({ content, title }, 20000);
-  const mutation = () => {
-    return;
-  }; // TODO: implement auto save
-
-  useEffect(() => {
-    if (debouncedData.content !== content || debouncedData.title !== title) {
-      mutation();
+    if (!hasContentChanged && !hasTitleChanged) {
+      return;
     }
-  }, [debouncedData, content, title]);
 
-  return {
-    isSaving: false,
-    isError: false,
-    isSuccess: false,
-  };
+    const handler = setTimeout(() => {
+      console.log("Auto-saving...");
+      saveDraft({ id, title, content });
+    }, 2000); // 2 seconds delay
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [content, title, id, previousSavedContent, previousSavedTitle, saveDraft]);
+
+  return { isAutoSaving };
 };
 
 const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
@@ -61,6 +70,8 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
       },
     }
   );
+
+  const { isAutoSaving } = useAutoSave(value, title, id);
 
   const { mutate: publishDraft, isLoading: isPosting } =
     api.blogs.publish.useMutation({
