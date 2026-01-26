@@ -28,6 +28,8 @@ export const draftsRouter = createTRPCRouter({
     return await ctx.prisma.draft.create({
       data: {
         title: "New Post",
+        tempContent: "",
+        tempTitle: "",
         content: "",
         userId: ctx.session.user.id,
       },
