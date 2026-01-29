@@ -106,6 +106,8 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
       },
     });
 
+  const { mutate: autoSaveDraft } = api.drafts.autoSave.useMutation();
+
   const { mutate: saveDraft, isLoading: isSaving } =
     api.drafts.save.useMutation({
       onSuccess: () => {
@@ -167,9 +169,9 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
           disabled={isSaving || isPosting || isDeleting}
           onClick={() => {
             if (value !== data.content || title !== data.title) {
-              toast.error("Please save your changes before previewing.");
-              return;
+              autoSaveDraft({ id, tempTitle: title, tempContent: value });
             }
+
             void router.push(`/drafts/preview/${id}`);
           }}
         >
