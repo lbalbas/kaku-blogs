@@ -56,6 +56,40 @@ export const draftsRouter = createTRPCRouter({
         data: {
           title: input.title,
           content: input.content,
+          tempTitle: "",
+          tempContent: "",
+        },
+      });
+
+      return { status: 200, msg: "Success" };
+    }),
+  autoSave: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        tempTitle: z.string(),
+        tempContent: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const draft = await ctx.prisma.draft.findFirst({
+        where: {
+          id: input.id,
+          userId: ctx.session.user.id,
+        },
+      });
+
+      if (!draft)
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "This draft doesn't exist or is not yours.",
+        });
+
+      await ctx.prisma.draft.update({
+        where: { id: input.id },
+        data: {
+          tempTitle: input.tempTitle,
+          tempContent: input.tempContent,
         },
       });
 

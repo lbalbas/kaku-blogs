@@ -14,7 +14,7 @@ export const useAutoSave = (content: string, title: string, id: string) => {
   const [isAutoSaving, setIsSaving] = useState(false);
 
   // Use tRPC mutation for auto-save
-  const { mutate: saveDraft } = api.drafts.save.useMutation({
+  const { mutate: autoSaveDraft } = api.drafts.autoSave.useMutation({
     onMutate: () => {
       setIsSaving(true);
     },
@@ -42,13 +42,20 @@ export const useAutoSave = (content: string, title: string, id: string) => {
 
     const handler = setTimeout(() => {
       console.log("Auto-saving...");
-      saveDraft({ id, title, content });
+      autoSaveDraft({ id, tempTitle: title, tempContent: content });
     }, 2000); // 2 seconds delay
 
     return () => {
       clearTimeout(handler);
     };
-  }, [content, title, id, previousSavedContent, previousSavedTitle, saveDraft]);
+  }, [
+    content,
+    title,
+    id,
+    previousSavedContent,
+    previousSavedTitle,
+    autoSaveDraft,
+  ]);
 
   return { isAutoSaving };
 };
@@ -65,8 +72,17 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
     },
     {
       onSuccess: (data) => {
-        setValue(data.content);
-        setTitle(data.title);
+        console.log(data);
+        if (data.tempTitle !== "") {
+          setTitle(data.tempTitle);
+        } else {
+          setTitle(data.title);
+        }
+        if (data.tempContent !== "") {
+          setValue(data.tempContent);
+        } else {
+          setValue(data.content);
+        }
       },
     }
   );
