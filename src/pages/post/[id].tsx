@@ -17,37 +17,39 @@ const BlogPost: NextPage<{ id: string }> = ({ id }) => {
 
   const { title, content, publishedAt } = data;
   return (
-    <div className="mx-auto flex w-10/12 flex-col py-10 md:w-9/12">
-      <Head>
-        <title>{title}</title>
-      </Head>
-      <h1 className="w-full font-display text-3xl font-bold text-cyan-950">
-        {title}
-      </h1>
-      <div className="my-6 flex w-fit items-center gap-4">
-        <Image
-          width={36}
-          height={36}
-          className="rounded-full"
-          src={data.user.image!}
-          alt="Author's profile picture"
-        />
-        <div className="flex flex-col">
-          <Link
-            className="font-bold text-slate-600"
-            href={`/user/${data.user.id}`}
-          >
-            {data.user.name}
-          </Link>
-          <span className="text-sm text-slate-500">{`${dayjs().to(
-            dayjs(publishedAt)
-          )}`}</span>
+    <div className="flex min-h-screen w-full flex-col items-center bg-white">
+      <div className="flex w-10/12 flex-col py-10 md:w-9/12">
+        <Head>
+          <title>{title}</title>
+        </Head>
+        <h1 className="w-full font-display text-3xl font-bold text-cyan-950">
+          {title}
+        </h1>
+        <div className="my-6 flex w-fit items-center gap-4">
+          <Image
+            width={36}
+            height={36}
+            className="rounded-full"
+            src={data.user.image!}
+            alt="Author's profile picture"
+          />
+          <div className="flex flex-col">
+            <Link
+              className="font-bold text-slate-600"
+              href={`/user/${data.user.id}`}
+            >
+              {data.user.name}
+            </Link>
+            <span className="text-sm text-slate-500">{`${dayjs().to(
+              dayjs(publishedAt)
+            )}`}</span>
+          </div>
         </div>
+        <div className="border-b-2 border-slate-100 py-4 text-justify leading-relaxed text-cyan-950">
+          {parse(content)}
+        </div>
+        <Comments post={data.id} />
       </div>
-      <div className="border-b-2 border-slate-100 py-4 text-justify leading-relaxed text-cyan-950">
-        {parse(content)}
-      </div>
-      <Comments post={data.id} />
     </div>
   );
 };

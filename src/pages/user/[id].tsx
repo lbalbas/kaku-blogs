@@ -95,34 +95,36 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
   };
 
   return (
-    <div className="mx-auto flex w-10/12 flex-col py-10 text-cyan-950">
-      <Head>
-        <title>{user.name} | Kaku Blogs</title>
-      </Head>
-      <div className="flex flex-col gap-12 md:flex-row">
-        <div className="flex flex-col items-center gap-2 font-display">
-          <Image
-            height={80}
-            width={80}
-            alt="User's profile picture"
-            className="rounded-full"
-            src={user.image ? user.image : ""}
-          />
-          <h1 className="text-center font-display text-2xl font-bold">
-            {user.name}
-          </h1>
-        </div>
-        <div className="flex flex-grow flex-col gap-3">
-          <h2 className="text-2xl">Posts published</h2>
-          {iteratePosts()}
-          <div className="flex justify-center gap-2 items-center">
-            <button disabled={currentPage <= 0} onClick={()=>{setPage(currentPage - 1)}}>
-                <FontAwesomeIcon icon={faChevronLeft} />
-            </button>
-            <span>Page {`${currentPage + 1} of ${posts.length}`}</span>
-            <button disabled={currentPage + 1 >= posts.length} onClick={()=>{setPage(currentPage + 1)}}>
-                <FontAwesomeIcon icon={faChevronRight} />
-            </button>
+    <div className="flex min-h-screen w-full flex-col items-center bg-white text-cyan-950">
+      <div className="flex w-10/12 flex-col py-10">
+        <Head>
+          <title>{user.name} | Kaku Blogs</title>
+        </Head>
+        <div className="flex flex-col gap-12 md:flex-row">
+          <div className="flex flex-col items-center gap-2 font-display">
+            <Image
+              height={80}
+              width={80}
+              alt="User's profile picture"
+              className="rounded-full"
+              src={user.image ? user.image : ""}
+            />
+            <h1 className="text-center font-display text-2xl font-bold">
+              {user.name}
+            </h1>
+          </div>
+          <div className="flex flex-grow flex-col gap-3">
+            <h2 className="text-2xl">Posts published</h2>
+            {iteratePosts()}
+            <div className="flex justify-center gap-2 items-center">
+              <button disabled={currentPage <= 0} onClick={()=>{setPage(currentPage - 1)}}>
+                  <FontAwesomeIcon icon={faChevronLeft} />
+              </button>
+              <span>Page {`${currentPage + 1} of ${posts.length}`}</span>
+              <button disabled={currentPage + 1 >= posts.length} onClick={()=>{setPage(currentPage + 1)}}>
+                  <FontAwesomeIcon icon={faChevronRight} />
+              </button>
+            </div>
           </div>
         </div>
       </div>

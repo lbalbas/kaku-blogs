@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       className={`${quicksand.variable} ${sourceSans3.variable} flex min-h-screen flex-col justify-between font-body`}
     >
       <Navbar />
-      <main className="mx-auto flex w-full max-w-[1440px] flex-grow">
+      <main className="flex w-full flex-grow flex-col">
         {children}
       </main>
       <footer className="bg-gradient-to-l from-teal-300 to-teal-500 py-4 text-center text-teal-900">
