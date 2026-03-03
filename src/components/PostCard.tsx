@@ -23,6 +23,13 @@ interface PostCardProps {
 import { motion } from "framer-motion";
 
 const PostCard = ({ post }: PostCardProps) => {
+  // Helper to remove HTML tags and truncate text
+  const getExcerpt = (html: string, length = 150) => {
+    const text = html.replace(/<[^>]+>/g, "");
+    return text.length > length ? text.substring(0, length) + "..." : text;
+  };
+
+const PostCard = ({ post }: PostCardProps) => {
 
   return (
     <motion.div

@@ -12,33 +12,37 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 
 config.autoAddCss = false;
 
+import { ThemeProvider } from "next-themes";
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   return (
     <SessionProvider session={session}>
-      <Toaster
-        position={"top-center"}
-        toastOptions={{
-          duration: 5000,
-          ariaProps: {
-            role: "status",
-            "aria-live": "polite",
-          },
-        }}
-      />
-      <Layout>
-        <Head>
-          <title>Kaku Blogs</title>
-          <meta
-            name="description"
-            content="Blogging platform made by Luis Balbás using the T3 stack"
-          />
-          <link rel="icon" href="/favicon.svg" />
-        </Head>
-        <Component {...pageProps} />
-      </Layout>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <Toaster
+          position={"top-center"}
+          toastOptions={{
+            duration: 5000,
+            ariaProps: {
+              role: "status",
+              "aria-live": "polite",
+            },
+          }}
+        />
+        <Layout>
+          <Head>
+            <title>Kaku Blogs</title>
+            <meta
+              name="description"
+              content="Blogging platform made by Luis Balbás using the T3 stack"
+            />
+            <link rel="icon" href="/favicon.svg" />
+          </Head>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
     </SessionProvider>
   );
 };
