@@ -100,7 +100,7 @@ const Comments = (props: { post: string }) => {
     return comments.map((comment) => {
       return (
         <div key={comment.id} className="flex w-full flex-col">
-          <div className="flex flex-col border-l-4 border-red-500 pl-4">
+          <div className="flex flex-col border-l-4 border-teal-500 pl-4 transition-all">
             <div className="flex items-center gap-4">
               <Link
                 href={`/user/${comment.user.id}`}
@@ -115,13 +115,13 @@ const Comments = (props: { post: string }) => {
                     alt="Profile picture"
                   /> : <FontAwesomeIcon size="sm" icon={faUser} />
                 }
-                <span className="font-display text-sm font-bold text-slate-700">
+                <span className="font-display text-sm font-bold text-slate-700 dark:text-slate-300">
                   {comment.user.name}
                 </span>
               </Link>
               <span className="text-xs italic text-slate-500"></span>
             </div>
-            <p>{comment.content}</p>
+            <p className="text-slate-800 dark:text-slate-200">{comment.content}</p>
             <div>
               {sessionData && (
                 <button
@@ -211,14 +211,14 @@ const Comments = (props: { post: string }) => {
 
   return (
     <div className="flex w-full flex-col">
-      <h3 className="pb-2 pt-4 font-display text-xl font-bold text-slate-600">
+      <h3 className="pb-4 pt-8 font-display text-2xl font-black text-slate-800 dark:text-white">
         Comments
       </h3>
       {sessionData && (
         <div className="flex flex-col gap-2">
           <textarea
-            className="rounded-md border-2 border-slate-200 p-2"
-            placeholder="Write your reply here."
+            className="rounded-xl border-2 border-slate-200 bg-white p-4 text-slate-900 focus:border-teal-500 focus:ring-0 dark:border-slate-800 dark:bg-slate-900 dark:text-white"
+            placeholder="What are your thoughts?"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
           />

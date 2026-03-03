@@ -11,11 +11,12 @@ import {
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import Image from "next/image";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const { data: sessionData } = useSession();
   return (
-    <nav className="bg-gradient-to-l from-teal-300 to-teal-500 text-white">
+    <nav className="sticky top-0 z-50 border-b border-teal-200/50 bg-teal-500/80 text-white backdrop-blur-md dark:border-slate-800/50 dark:bg-slate-950/80">
       <div className="mx-auto flex w-11/12 max-w-[1440px] items-center gap-4 py-4 md:justify-between md:gap-0">
         <Link className="font-bold tracking-wide" href="/">
           <Image
@@ -35,7 +36,17 @@ const Navbar = () => {
           />
         </Link>
         <SearchBar />
-        {sessionData ? (<div className="flex items-center gap-6 justify-between md:w-52"><DraftButton /><UserMenu user={sessionData.user} /></div>) : <SignInButton />}
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
+          {sessionData ? (
+            <div className="flex items-center gap-6 justify-between md:w-52">
+              <DraftButton />
+              <UserMenu user={sessionData.user} />
+            </div>
+          ) : (
+            <SignInButton />
+          )}
+        </div>
       </div>
     </nav>
   );
