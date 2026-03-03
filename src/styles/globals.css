@@ -4,6 +4,10 @@
 
 @layer base {
   html {
+    @apply transition-colors duration-300;
+  }
+  body {
+    @apply min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100;
     --tw-gradient-to: #14b8a6 var(--tw-gradient-to-position);
     --tw-gradient-to-position: ;
     --tw-gradient-from: #5eead4 var(--tw-gradient-from-position);
@@ -11,7 +15,6 @@
     --tw-gradient-to: #14b8a6 var(--tw-gradient-from-position);
     --tw-gradient-to-position: ;
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-    background-image: linear-gradient(to left, var(--tw-gradient-stops));
   }
 }
 
