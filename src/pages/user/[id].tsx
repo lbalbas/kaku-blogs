@@ -63,29 +63,30 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
       return (
         <div
           key={post.id}
-          className="group flex items-center gap-8 border-l-4 border-violet-900 p-3 pl-4"
+          className="group flex items-center gap-8 border-l-4 border-teal-500 bg-white p-4 pl-6 shadow-sm transition-all hover:shadow-md dark:bg-slate-900"
         >
           <Link
-            className="flex flex-col justify-center font-display text-lg"
+            className="flex flex-col justify-center font-display text-lg font-bold text-slate-800 transition-colors hover:text-teal-600 dark:text-slate-200 dark:hover:text-teal-400"
             href={`/post/${post.id}`}
           >
             {post.title}
-            <span className="text-xs italic text-slate-500">{`${dayjs().to(
+            <span className="text-xs font-normal italic text-slate-500 dark:text-slate-400">{`${dayjs().to(
               dayjs(post.publishedAt)
             )}`}</span>
           </Link>
           {sessionData && sessionData.user.id === user.id && (
-            <div className="flex flex-col opacity-100 group-hover:opacity-100 lg:opacity-0">
-              <Link href={`/post/edit/${post.id}`}>
-                <FontAwesomeIcon size="xs" icon={faPenToSquare} />
+            <div className="flex gap-4 text-slate-400 opacity-100 group-hover:opacity-100 lg:opacity-0 transition-opacity">
+              <Link href={`/post/edit/${post.id}`} className="hover:text-teal-600 dark:hover:text-teal-400">
+                <FontAwesomeIcon icon={faPenToSquare} />
               </Link>
               <button
+                className="hover:text-red-500"
                 onClick={() => {
                   if (confirm("Are you sure you want to delete this post?"))
                     deletePost({ id: post.id });
                 }}
               >
-                <FontAwesomeIcon size="xs" icon={faTrash} />
+                <FontAwesomeIcon icon={faTrash} />
               </button>
             </div>
           )}
@@ -95,7 +96,7 @@ const UserPage: NextPage<{ id: string }> = ({ id }) => {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center bg-white text-cyan-950">
+    <div className="flex min-h-screen w-full flex-col items-center bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <div className="flex w-10/12 flex-col py-10">
         <Head>
           <title>{user.name} | Kaku Blogs</title>
