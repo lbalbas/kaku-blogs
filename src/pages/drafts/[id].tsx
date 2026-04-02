@@ -152,7 +152,7 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
     );
 
   return (
-    <div className="mx-auto w-10/12 py-10 text-cyan-950">
+    <div className="mx-auto w-10/12 py-10 text-cyan-950 dark:text-cyan-100">
       <div className="flex items-center justify-end gap-2">
         <button
           disabled={isSaving || isPosting || isDeleting}
@@ -200,7 +200,7 @@ const DraftEditor: NextPage<{ id: string }> = ({ id }) => {
         <div className="flex flex-grow flex-col pb-4 font-display">
           <span className="text-xl font-bold">Title</span>
           <input
-            className="rounded-lg border-2 border-slate-200 px-2 py-1"
+            className="rounded-lg border-2 border-slate-200 bg-white px-2 py-1 dark:border-slate-700 dark:bg-slate-900"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             type="text"

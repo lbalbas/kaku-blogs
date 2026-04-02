@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <main className="flex w-full flex-grow flex-col">
         {children}
       </main>
-      <footer className="bg-gradient-to-l from-teal-300 to-teal-500 py-4 text-center text-teal-900">
+      <footer className="bg-gradient-to-l from-teal-300 to-teal-500 py-4 text-center text-teal-900 dark:from-teal-900 dark:to-teal-950 dark:text-teal-100">
         Developed by{" "}
         <a className="underline" href="https://github.com/lbalbas">
           Luis Balbás

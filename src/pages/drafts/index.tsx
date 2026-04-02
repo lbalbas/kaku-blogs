@@ -29,12 +29,12 @@ const Drafts = () => {
   if (isLoading) return <LoadingBlock size={32} />;
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center bg-white">
+    <div className="flex min-h-screen w-full flex-col items-center bg-white dark:bg-slate-950">
       <div className="flex w-10/12 max-w-[1440px] flex-col gap-6 py-10 font-display">
         <Head>
           <title>Drafts | Kaku Blogs</title>
         </Head>
-        <h1 className="text-2xl font-bold text-cyan-950">Your Drafts</h1>
+        <h1 className="text-2xl font-bold text-cyan-950 dark:text-cyan-100">Your Drafts</h1>
         <div className="flex flex-wrap items-center justify-center gap-4">
           {!drafts || drafts.length == 0 ? (
             <div className="py-4">No Drafts yet!</div>
@@ -42,7 +42,7 @@ const Drafts = () => {
             drafts.map((draft) => {
               return (
                 <Link
-                  className="w-full rounded-2xl border-2  border-slate-300 p-2"
+                  className="w-full rounded-2xl border-2 border-slate-300 p-2 transition-colors dark:border-slate-700 dark:hover:bg-slate-800"
                   key={draft.id}
                   href={`/drafts/${draft.id}`}
                 >

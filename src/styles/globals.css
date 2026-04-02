@@ -34,3 +34,47 @@ ul {
   list-style-position: inside;
   padding-left: 2.5rem;
 }
+
+.dark .ql-toolbar.ql-snow {
+  background-color: theme('colors.slate.900');
+  border-color: theme('colors.slate.700') !important;
+}
+
+.dark .ql-container.ql-snow {
+  border-color: theme('colors.slate.700') !important;
+  color: theme('colors.slate.100');
+}
+
+.dark .ql-snow .ql-stroke {
+  stroke: theme('colors.slate.100');
+}
+
+.dark .ql-snow .ql-fill {
+  fill: theme('colors.slate.100');
+}
+
+.dark .ql-snow .ql-picker {
+  color: theme('colors.slate.100');
+}
+
+.dark .ql-editor.ql-blank::before {
+  color: theme('colors.slate.400');
+}
+
+.dark .ql-snow .ql-picker-options {
+  background-color: theme('colors.slate.800');
+  border-color: theme('colors.slate.700');
+}
+
+.dark .ql-snow .ql-tooltip {
+  background-color: theme('colors.slate.800');
+  border-color: theme('colors.slate.700');
+  color: theme('colors.slate.100');
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+}
+
+.dark .ql-snow .ql-tooltip input[type="text"] {
+  background-color: theme('colors.slate.900');
+  border-color: theme('colors.slate.700');
+  color: theme('colors.slate.100');
+}

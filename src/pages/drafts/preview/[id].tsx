@@ -37,7 +37,7 @@ const DraftPreview: NextPage<{ id: string }> = ({ id }) => {
       <Head>
         <title>{tempTitle || title}</title>
       </Head>
-      <h1 className="w-full font-display text-3xl font-bold text-cyan-950">
+      <h1 className="w-full font-display text-3xl font-bold text-cyan-950 dark:text-cyan-100">
         {tempTitle || title}
       </h1>
       <div className="my-6 flex w-fit items-center gap-4">
@@ -50,19 +50,19 @@ const DraftPreview: NextPage<{ id: string }> = ({ id }) => {
         />
         <div className="flex flex-col">
           <Link
-            className="font-bold text-slate-600"
+            className="font-bold text-slate-600 dark:text-slate-300"
             href={`/user/${data.user.id}`}
           >
             {data.user.name}
           </Link>
-          <span className="text-sm text-slate-500">5 minutes ago</span>
+          <span className="text-sm text-slate-500 dark:text-slate-400">5 minutes ago</span>
         </div>
       </div>
-      <div className="border-b-2 border-slate-100 py-4 text-justify leading-relaxed text-cyan-950">
+      <div className="border-b-2 border-slate-100 py-4 text-justify leading-relaxed text-cyan-950 dark:border-slate-800 dark:text-cyan-100">
         {parse(tempContent || content)}
       </div>
       <Link
-        className="my-2 w-fit rounded-full bg-black p-2 px-3 text-white"
+        className="my-2 w-fit rounded-full bg-black p-2 px-3 text-white dark:bg-white dark:text-black"
         href={`/drafts/${id}`}
       >
         Go back to editor
